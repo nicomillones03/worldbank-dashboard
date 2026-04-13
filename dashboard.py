@@ -534,6 +534,7 @@ elif page == "Country–Sector Mapping":
         color="cs_context", color_discrete_map=CONTEXT_COLOURS,
         hover_data=["country_name", "sector"],
         log_y=True,
+        render_mode="svg",
         category_orders={"cs_context": CONTEXT_ORDER},
         labels={
             "cs_donor_count": "Active donors (recent window)",
@@ -631,6 +632,7 @@ elif page == "Priority Framework":
             color="priority", color_discrete_map=PRIORITY_COLOURS,
             hover_data=["donor_name","country_name","sector"],
             opacity=0.6,
+            render_mode="svg",
             category_orders={"priority": [p for p in PRIORITY_ORDER if p != "Peripheral / not assessed"]},
             labels={
                 "recent_avg": "Recent avg disbursement ($M)",
