@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Large/raw data — only the bundled data/ folder is committed
+data_raw/
+data_processed/
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store

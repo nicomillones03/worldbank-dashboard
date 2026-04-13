@@ -1,0 +1,574 @@
+country_code,country_name,sector,cs_recent_avg,cs_donor_count,disburse_pctile,donor_count_pctile,cs_context
+AIA,Anguilla,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+AIA,Anguilla,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Transport & Storage,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ATG,Antigua and Barbuda,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+ARG,Argentina,Agriculture & Natural Resources,60.56304535035763,16,89.17975567190227,80.0174520069808,Fragmented coordination space
+ARG,Argentina,Business & Other Services,2.8271015378469264,8,53.752181500872595,55.67190226876091,Thin / emerging space
+ARG,Argentina,Communications,0.0394506489111403,3,25.479930191972077,31.8499127399651,Low-activity space
+ARG,Argentina,Education,29.75832903248292,32,82.02443280977313,98.42931937172776,Fragmented coordination space
+ARG,Argentina,Energy,21.71318995090407,11,78.53403141361257,67.71378708551484,Fragmented coordination space
+ARG,Argentina,Environmental Protection,5.572631599482258,18,62.30366492146597,82.4607329842932,Fragmented coordination space
+ARG,Argentina,Finance & Banking,0.6912852539436863,3,38.39441535776614,31.8499127399651,Thin / emerging space
+ARG,Argentina,Governance & Civil Society,15.58433873759288,27,74.52006980802793,96.07329842931938,Fragmented coordination space
+ARG,Argentina,Health,34.14893503169143,19,82.54799301919721,83.94415357766142,Fragmented coordination space
+ARG,Argentina,Industry Mining & Construction,1.46343067006581,10,45.724258289703315,63.78708551483421,Thin / emerging space
+ARG,Argentina,Other Multisector,12.246542609349362,24,71.02966841186736,92.49563699825481,Fragmented coordination space
+ARG,Argentina,Other Social Infrastructure,9.991876203475988,22,68.760907504363,89.09249563699827,Fragmented coordination space
+ARG,Argentina,Population & Reproductive Health,1.1439779820795304,6,42.75741710296684,46.42233856893543,Thin / emerging space
+ARG,Argentina,Tourism,0.03265958819905987,3,24.781849912739965,31.8499127399651,Low-activity space
+ARG,Argentina,Trade,0.21013230638211752,5,31.064572425828967,42.40837696335078,Low-activity space
+ARG,Argentina,Transport & Storage,0.3407035285814865,5,34.3804537521815,42.40837696335078,Thin / emerging space
+ARG,Argentina,Water & Sanitation,42.82874863532038,11,84.99127399650959,67.71378708551484,Fragmented coordination space
+BRB,Barbados,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Transport & Storage,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BRB,Barbados,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+BLZ,Belize,Agriculture & Natural Resources,2.3183748514502587,9,50.08726003490401,59.860383944153575,Thin / emerging space
+BLZ,Belize,Business & Other Services,0.39274335340132766,8,35.602094240837694,55.67190226876091,Thin / emerging space
+BLZ,Belize,Communications,0.005738689142684033,1,22.68760907504363,23.56020942408377,Low-activity space
+BLZ,Belize,Education,4.58730827411872,22,59.33682373472949,89.09249563699827,Fragmented coordination space
+BLZ,Belize,Energy,0.10299079949496358,3,27.748691099476442,31.8499127399651,Low-activity space
+BLZ,Belize,Environmental Protection,2.3765556797936607,12,50.6108202443281,70.85514834205934,Fragmented coordination space
+BLZ,Belize,Finance & Banking,0.3864338137224133,4,35.25305410122164,38.132635253054104,Thin / emerging space
+BLZ,Belize,Governance & Civil Society,3.886972273470681,16,57.76614310645725,80.0174520069808,Fragmented coordination space
+BLZ,Belize,Health,3.3092854389077044,10,55.14834205933682,63.78708551483421,Thin / emerging space
+BLZ,Belize,Industry Mining & Construction,1.1363731284131326,4,42.582897033158815,38.132635253054104,Thin / emerging space
+BLZ,Belize,Other Multisector,2.898472900713751,12,53.92670157068062,70.85514834205934,Fragmented coordination space
+BLZ,Belize,Other Social Infrastructure,1.5537843396157933,8,46.596858638743456,55.67190226876091,Thin / emerging space
+BLZ,Belize,Population & Reproductive Health,1.1881920105514776,7,43.280977312390924,51.22164048865619,Thin / emerging space
+BLZ,Belize,Tourism,0.011573207396828733,2,23.211169284467715,26.96335078534031,Low-activity space
+BLZ,Belize,Trade,0.053770178380515364,3,25.82897033158813,31.8499127399651,Low-activity space
+BLZ,Belize,Transport & Storage,14.305731940733358,5,73.29842931937172,42.40837696335078,Anchor partnership space
+BLZ,Belize,Water & Sanitation,0.38593912069272784,4,35.07853403141361,38.132635253054104,Thin / emerging space
+BOL,Bolivia (Plurinational State of),Agriculture & Natural Resources,61.54288049607785,22,89.52879581151832,89.09249563699827,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Business & Other Services,1.61869867069829,9,47.12041884816754,59.860383944153575,Thin / emerging space
+BOL,Bolivia (Plurinational State of),Communications,0.9215582879103965,3,39.9650959860384,31.8499127399651,Thin / emerging space
+BOL,Bolivia (Plurinational State of),Education,23.522423391293376,31,79.75567190226876,97.99301919720767,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Energy,34.54013704506225,11,82.89703315881326,67.71378708551484,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Environmental Protection,17.027786565385146,21,75.04363001745202,87.34729493891797,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Finance & Banking,72.72854395596374,7,91.7975567190227,51.22164048865619,Anchor partnership space
+BOL,Bolivia (Plurinational State of),Governance & Civil Society,44.67519932540631,30,85.86387434554975,97.73123909249564,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Health,28.427230515762997,21,81.84991273996509,87.34729493891797,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Industry Mining & Construction,4.027367616110931,14,58.289703315881326,76.26527050610821,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Other Multisector,36.197497480885026,21,83.7696335078534,87.34729493891797,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Other Social Infrastructure,106.05567032695446,20,95.28795811518324,85.68935427574172,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Population & Reproductive Health,14.643789334585533,15,73.99650959860384,78.1849912739965,Fragmented coordination space
+BOL,Bolivia (Plurinational State of),Tourism,3.7655027282933937,6,57.59162303664922,46.42233856893543,Thin / emerging space
+BOL,Bolivia (Plurinational State of),Trade,0.541750701384445,7,36.82373472949389,51.22164048865619,Thin / emerging space
+BOL,Bolivia (Plurinational State of),Transport & Storage,59.41195641287492,7,88.8307155322862,51.22164048865619,Anchor partnership space
+BOL,Bolivia (Plurinational State of),Water & Sanitation,60.62896381201762,18,89.3542757417103,82.4607329842932,Fragmented coordination space
+BRA,Brazil,Agriculture & Natural Resources,105.76889568859058,23,95.11343804537522,90.92495636998254,Fragmented coordination space
+BRA,Brazil,Business & Other Services,4.7467309910106525,11,60.03490401396161,67.71378708551484,Fragmented coordination space
+BRA,Brazil,Communications,4.5819480533868,9,59.16230366492147,59.860383944153575,Thin / emerging space
+BRA,Brazil,Education,114.68852555604155,38,95.98603839441536,99.91273996509598,Fragmented coordination space
+BRA,Brazil,Energy,70.86469313804396,15,91.44851657940663,78.1849912739965,Fragmented coordination space
+BRA,Brazil,Environmental Protection,118.44032813160437,24,96.68411867364746,92.49563699825481,Fragmented coordination space
+BRA,Brazil,Finance & Banking,7.8015990215267825,9,66.3176265270506,59.860383944153575,Thin / emerging space
+BRA,Brazil,Governance & Civil Society,47.00616650317193,31,86.56195462478185,97.99301919720767,Fragmented coordination space
+BRA,Brazil,Health,26.914570806624212,21,81.32635253054102,87.34729493891797,Fragmented coordination space
+BRA,Brazil,Industry Mining & Construction,47.832850223060206,14,86.91099476439791,76.26527050610821,Fragmented coordination space
+BRA,Brazil,Other Multisector,37.591653177284265,29,83.94415357766142,97.38219895287958,Fragmented coordination space
+BRA,Brazil,Other Social Infrastructure,149.76055855436275,25,98.25479930191972,94.06631762652705,Fragmented coordination space
+BRA,Brazil,Population & Reproductive Health,9.821850802151888,13,68.41186736474695,73.56020942408377,Fragmented coordination space
+BRA,Brazil,Tourism,0.8587549914817258,6,39.44153577661431,46.42233856893543,Thin / emerging space
+BRA,Brazil,Trade,1.0206973820816556,7,41.53577661431064,51.22164048865619,Thin / emerging space
+BRA,Brazil,Transport & Storage,60.091191534440675,11,89.00523560209425,67.71378708551484,Fragmented coordination space
+BRA,Brazil,Water & Sanitation,52.791796445135965,11,87.43455497382199,67.71378708551484,Fragmented coordination space
+CHL,Chile,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Transport & Storage,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+CHL,Chile,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+COL,Colombia,Agriculture & Natural Resources,157.16031031900334,21,98.42931937172776,87.34729493891797,Fragmented coordination space
+COL,Colombia,Business & Other Services,11.21821904810489,15,69.80802792321117,78.1849912739965,Fragmented coordination space
+COL,Colombia,Communications,4.3796408308557675,10,58.98778359511344,63.78708551483421,Thin / emerging space
+COL,Colombia,Education,89.25888474176786,38,93.717277486911,99.91273996509598,Fragmented coordination space
+COL,Colombia,Energy,113.88718056141198,17,95.81151832460732,81.32635253054102,Fragmented coordination space
+COL,Colombia,Environmental Protection,328.46441802289047,28,99.82547993019197,96.8586387434555,Fragmented coordination space
+COL,Colombia,Finance & Banking,17.915546265763044,8,75.5671902268761,55.67190226876091,Anchor partnership space
+COL,Colombia,Governance & Civil Society,525.5814453741199,37,100.0,99.65095986038395,Fragmented coordination space
+COL,Colombia,Health,69.10750787284859,23,91.09947643979058,90.92495636998254,Fragmented coordination space
+COL,Colombia,Industry Mining & Construction,57.18731695904925,16,88.48167539267016,80.0174520069808,Fragmented coordination space
+COL,Colombia,Other Multisector,122.85991688109443,34,96.8586387434555,99.21465968586386,Fragmented coordination space
+COL,Colombia,Other Social Infrastructure,104.59901654089434,24,94.76439790575915,92.49563699825481,Fragmented coordination space
+COL,Colombia,Population & Reproductive Health,22.50204788065649,13,79.05759162303664,73.56020942408377,Fragmented coordination space
+COL,Colombia,Tourism,1.1523800522491447,8,43.1064572425829,55.67190226876091,Thin / emerging space
+COL,Colombia,Trade,3.597148482700845,8,57.06806282722513,55.67190226876091,Thin / emerging space
+COL,Colombia,Transport & Storage,14.743905604705823,10,74.17102966841188,63.78708551483421,Anchor partnership space
+COL,Colombia,Water & Sanitation,27.287490895217207,18,81.67539267015707,82.4607329842932,Fragmented coordination space
+CRI,Costa Rica,Agriculture & Natural Resources,5.460418258344539,14,61.95462478184991,76.26527050610821,Fragmented coordination space
+CRI,Costa Rica,Business & Other Services,0.26742448844645567,7,32.28621291448517,51.22164048865619,Low-activity space
+CRI,Costa Rica,Communications,0.35224139242379443,6,34.55497382198953,46.42233856893543,Thin / emerging space
+CRI,Costa Rica,Education,20.68266791208659,27,78.01047120418848,96.07329842931938,Fragmented coordination space
+CRI,Costa Rica,Energy,100.86022771630854,8,94.58987783595113,55.67190226876091,Anchor partnership space
+CRI,Costa Rica,Environmental Protection,12.693993658968019,15,71.37870855148341,78.1849912739965,Fragmented coordination space
+CRI,Costa Rica,Finance & Banking,7.514093196667026,8,65.96858638743456,55.67190226876091,Thin / emerging space
+CRI,Costa Rica,Governance & Civil Society,25.97575665905545,28,80.80279232111693,96.8586387434555,Fragmented coordination space
+CRI,Costa Rica,Health,9.293985314226424,12,67.88830715532286,70.85514834205934,Fragmented coordination space
+CRI,Costa Rica,Industry Mining & Construction,1.2548834697044913,9,44.153577661431065,59.860383944153575,Thin / emerging space
+CRI,Costa Rica,Other Multisector,82.3892904144102,19,93.19371727748691,83.94415357766142,Fragmented coordination space
+CRI,Costa Rica,Other Social Infrastructure,7.400832497047731,13,65.44502617801047,73.56020942408377,Fragmented coordination space
+CRI,Costa Rica,Population & Reproductive Health,2.0357259111630026,8,49.21465968586388,55.67190226876091,Thin / emerging space
+CRI,Costa Rica,Tourism,0.028020693019595297,3,23.909249563699824,31.8499127399651,Low-activity space
+CRI,Costa Rica,Trade,0.28330745400027013,3,32.98429319371728,31.8499127399651,Low-activity space
+CRI,Costa Rica,Transport & Storage,1.0814023193451379,8,42.23385689354276,55.67190226876091,Thin / emerging space
+CRI,Costa Rica,Water & Sanitation,9.303427311449399,11,68.06282722513089,67.71378708551484,Fragmented coordination space
+CUB,Cuba,Agriculture & Natural Resources,14.562445391495054,17,73.82198952879581,81.32635253054102,Fragmented coordination space
+CUB,Cuba,Business & Other Services,0.6787336478459491,4,38.21989528795812,38.132635253054104,Thin / emerging space
+CUB,Cuba,Communications,0.2871581213408996,4,33.682373472949386,38.132635253054104,Thin / emerging space
+CUB,Cuba,Education,6.238776262444206,25,63.525305410122165,94.06631762652705,Fragmented coordination space
+CUB,Cuba,Energy,9.808083182654956,11,68.23734729493893,67.71378708551484,Fragmented coordination space
+CUB,Cuba,Environmental Protection,22.652324062743645,13,79.23211169284468,73.56020942408377,Fragmented coordination space
+CUB,Cuba,Finance & Banking,0.6237023561857125,3,37.696335078534034,31.8499127399651,Thin / emerging space
+CUB,Cuba,Governance & Civil Society,19.820991739639684,23,76.96335078534031,90.92495636998254,Fragmented coordination space
+CUB,Cuba,Health,13.998031475537585,18,73.1239092495637,82.4607329842932,Fragmented coordination space
+CUB,Cuba,Industry Mining & Construction,2.9290273058148935,11,54.275741710296685,67.71378708551484,Fragmented coordination space
+CUB,Cuba,Other Multisector,10.59970826100705,20,69.45898778359512,85.68935427574172,Fragmented coordination space
+CUB,Cuba,Other Social Infrastructure,6.541433619383262,16,64.04886561954625,80.0174520069808,Fragmented coordination space
+CUB,Cuba,Population & Reproductive Health,11.681568890007261,8,70.85514834205934,55.67190226876091,Anchor partnership space
+CUB,Cuba,Tourism,0.0345240522826831,3,25.13089005235602,31.8499127399651,Low-activity space
+CUB,Cuba,Trade,0.1864195167273042,3,30.017452006980804,31.8499127399651,Low-activity space
+CUB,Cuba,Transport & Storage,3.31514366932991,4,55.32286212914486,38.132635253054104,Thin / emerging space
+CUB,Cuba,Water & Sanitation,17.68362877889327,12,75.39267015706807,70.85514834205934,Fragmented coordination space
+DMA,Dominica,Agriculture & Natural Resources,5.235528023414008,8,61.43106457242583,55.67190226876091,Thin / emerging space
+DMA,Dominica,Business & Other Services,0.03843852217358567,3,25.30541012216405,31.8499127399651,Low-activity space
+DMA,Dominica,Communications,2.5899743333333336,1,52.18150087260035,23.56020942408377,Thin / emerging space
+DMA,Dominica,Education,1.1498546924475852,13,42.93193717277487,73.56020942408377,Fragmented coordination space
+DMA,Dominica,Energy,10.052046745658062,4,68.93542757417103,38.132635253054104,Anchor partnership space
+DMA,Dominica,Environmental Protection,0.9626301135368668,6,40.83769633507853,46.42233856893543,Thin / emerging space
+DMA,Dominica,Finance & Banking,0.030062000000000002,1,24.43280977312391,23.56020942408377,Low-activity space
+DMA,Dominica,Governance & Civil Society,6.541469830020204,8,64.22338568935427,55.67190226876091,Thin / emerging space
+DMA,Dominica,Health,1.8889602813460835,6,48.34205933682373,46.42233856893543,Thin / emerging space
+DMA,Dominica,Industry Mining & Construction,0.2958918998383384,4,33.85689354275742,38.132635253054104,Thin / emerging space
+DMA,Dominica,Other Multisector,4.283007227760155,6,58.813263525305416,46.42233856893543,Thin / emerging space
+DMA,Dominica,Other Social Infrastructure,0.7896406420482042,4,39.09249563699825,38.132635253054104,Thin / emerging space
+DMA,Dominica,Population & Reproductive Health,0.158051604413629,3,29.49389179755672,31.8499127399651,Low-activity space
+DMA,Dominica,Tourism,0.0036449566697635,1,21.727748691099478,23.56020942408377,Low-activity space
+DMA,Dominica,Trade,0.0036449566697635,1,21.727748691099478,23.56020942408377,Low-activity space
+DMA,Dominica,Transport & Storage,5.00903,2,60.90750436300174,26.96335078534031,Thin / emerging space
+DMA,Dominica,Water & Sanitation,0.650952170670418,2,38.045375218150085,26.96335078534031,Thin / emerging space
+DOM,Dominican Republic,Agriculture & Natural Resources,45.781201821825725,13,86.03839441535777,73.56020942408377,Fragmented coordination space
+DOM,Dominican Republic,Business & Other Services,1.0165685454058264,7,41.361256544502616,51.22164048865619,Thin / emerging space
+DOM,Dominican Republic,Communications,0.4060011788400537,6,35.776614310645726,46.42233856893543,Thin / emerging space
+DOM,Dominican Republic,Education,19.051942370938608,23,76.26527050610821,90.92495636998254,Fragmented coordination space
+DOM,Dominican Republic,Energy,52.66407387086533,13,87.26003490401396,73.56020942408377,Fragmented coordination space
+DOM,Dominican Republic,Environmental Protection,4.922482529320675,12,60.55846422338569,70.85514834205934,Fragmented coordination space
+DOM,Dominican Republic,Finance & Banking,0.9451253178306557,7,40.31413612565445,51.22164048865619,Thin / emerging space
+DOM,Dominican Republic,Governance & Civil Society,76.97888164491468,22,92.49563699825481,89.09249563699827,Fragmented coordination space
+DOM,Dominican Republic,Health,16.542890611153947,16,74.86910994764398,80.0174520069808,Fragmented coordination space
+DOM,Dominican Republic,Industry Mining & Construction,2.0188594602497942,3,49.040139616055846,31.8499127399651,Thin / emerging space
+DOM,Dominican Republic,Other Multisector,114.88552386903159,20,96.16055846422339,85.68935427574172,Fragmented coordination space
+DOM,Dominican Republic,Other Social Infrastructure,8.168805064417326,15,66.84118673647468,78.1849912739965,Fragmented coordination space
+DOM,Dominican Republic,Population & Reproductive Health,35.697955502104385,13,83.59511343804537,73.56020942408377,Fragmented coordination space
+DOM,Dominican Republic,Tourism,13.842151047465052,4,72.77486910994764,38.132635253054104,Anchor partnership space
+DOM,Dominican Republic,Trade,0.3127588688286778,6,34.031413612565444,46.42233856893543,Thin / emerging space
+DOM,Dominican Republic,Transport & Storage,98.78425308880009,7,94.4153577661431,51.22164048865619,Anchor partnership space
+DOM,Dominican Republic,Water & Sanitation,22.944678874674214,13,79.58115183246073,73.56020942408377,Fragmented coordination space
+ECU,Ecuador,Agriculture & Natural Resources,18.870138976780694,20,75.91623036649214,85.68935427574172,Fragmented coordination space
+ECU,Ecuador,Business & Other Services,5.0035357444247035,11,60.73298429319372,67.71378708551484,Fragmented coordination space
+ECU,Ecuador,Communications,1.999473891932413,3,48.86561954624782,31.8499127399651,Thin / emerging space
+ECU,Ecuador,Education,33.823013334474844,32,82.37347294938918,98.42931937172776,Fragmented coordination space
+ECU,Ecuador,Energy,133.99558733481337,11,97.73123909249564,67.71378708551484,Fragmented coordination space
+ECU,Ecuador,Environmental Protection,66.14869936224216,19,89.87783595113437,83.94415357766142,Fragmented coordination space
+ECU,Ecuador,Finance & Banking,10.281798332166158,11,69.10994764397905,67.71378708551484,Fragmented coordination space
+ECU,Ecuador,Governance & Civil Society,68.38834710839566,29,90.92495636998254,97.38219895287958,Fragmented coordination space
+ECU,Ecuador,Health,34.914502609857834,21,83.07155322862128,87.34729493891797,Fragmented coordination space
+ECU,Ecuador,Industry Mining & Construction,2.7034854528291614,11,53.054101221640494,67.71378708551484,Fragmented coordination space
+ECU,Ecuador,Other Multisector,13.108334551044612,22,71.9022687609075,89.09249563699827,Fragmented coordination space
+ECU,Ecuador,Other Social Infrastructure,44.62850662204992,23,85.68935427574172,90.92495636998254,Fragmented coordination space
+ECU,Ecuador,Population & Reproductive Health,7.2812742113407305,12,64.92146596858639,70.85514834205934,Fragmented coordination space
+ECU,Ecuador,Tourism,0.790370014276694,6,39.26701570680628,46.42233856893543,Thin / emerging space
+ECU,Ecuador,Trade,0.763730436903749,8,38.917975567190226,55.67190226876091,Thin / emerging space
+ECU,Ecuador,Transport & Storage,2.8249734155852213,11,53.57766143106457,67.71378708551484,Fragmented coordination space
+ECU,Ecuador,Water & Sanitation,34.20300326754873,15,82.72251308900523,78.1849912739965,Fragmented coordination space
+SLV,El Salvador,Agriculture & Natural Resources,20.42924567449958,19,77.4869109947644,83.94415357766142,Fragmented coordination space
+SLV,El Salvador,Business & Other Services,14.480482645044567,9,73.64746945898779,59.860383944153575,Anchor partnership space
+SLV,El Salvador,Communications,5.2740624052995395,3,61.78010471204188,31.8499127399651,Thin / emerging space
+SLV,El Salvador,Education,42.358897432388495,26,84.81675392670157,95.20069808027924,Fragmented coordination space
+SLV,El Salvador,Energy,85.80317125511878,11,93.36823734729494,67.71378708551484,Fragmented coordination space
+SLV,El Salvador,Environmental Protection,7.392320424332844,14,65.27050610820244,76.26527050610821,Fragmented coordination space
+SLV,El Salvador,Finance & Banking,25.599915506479533,9,80.27923211169285,59.860383944153575,Anchor partnership space
+SLV,El Salvador,Governance & Civil Society,124.32930406513464,27,97.03315881326353,96.07329842931938,Fragmented coordination space
+SLV,El Salvador,Health,20.93090901901466,25,78.1849912739965,94.06631762652705,Fragmented coordination space
+SLV,El Salvador,Industry Mining & Construction,0.8798270551154234,9,39.79057591623037,59.860383944153575,Thin / emerging space
+SLV,El Salvador,Other Multisector,62.372669161634775,22,89.70331588132635,89.09249563699827,Fragmented coordination space
+SLV,El Salvador,Other Social Infrastructure,19.76530981092851,23,76.78883071553228,90.92495636998254,Fragmented coordination space
+SLV,El Salvador,Population & Reproductive Health,21.35447962486783,14,78.35951134380453,76.26527050610821,Fragmented coordination space
+SLV,El Salvador,Tourism,0.37027637247036305,4,34.72949389179756,38.132635253054104,Thin / emerging space
+SLV,El Salvador,Trade,4.023243472906267,7,58.1151832460733,51.22164048865619,Thin / emerging space
+SLV,El Salvador,Transport & Storage,97.85730485049855,6,94.06631762652705,46.42233856893543,Anchor partnership space
+SLV,El Salvador,Water & Sanitation,10.748958557598975,9,69.63350785340315,59.860383944153575,Anchor partnership space
+GRD,Grenada,Agriculture & Natural Resources,1.5688365759146379,9,46.77137870855148,59.860383944153575,Thin / emerging space
+GRD,Grenada,Business & Other Services,0.026873504284076064,4,23.7347294938918,38.132635253054104,Low-activity space
+GRD,Grenada,Communications,2.4134470816608045,3,51.30890052356021,31.8499127399651,Thin / emerging space
+GRD,Grenada,Education,1.0607406179489924,13,42.059336823734725,73.56020942408377,Fragmented coordination space
+GRD,Grenada,Energy,4.756326329510386,4,60.20942408376963,38.132635253054104,Thin / emerging space
+GRD,Grenada,Environmental Protection,0.728185748142693,6,38.7434554973822,46.42233856893543,Thin / emerging space
+GRD,Grenada,Finance & Banking,0.12765066666666666,1,28.62129144851658,23.56020942408377,Low-activity space
+GRD,Grenada,Governance & Civil Society,9.824635339539656,9,68.58638743455498,59.860383944153575,Anchor partnership space
+GRD,Grenada,Health,1.5283834469950612,7,46.07329842931937,51.22164048865619,Thin / emerging space
+GRD,Grenada,Industry Mining & Construction,0.08611478432333951,5,27.225130890052355,42.40837696335078,Low-activity space
+GRD,Grenada,Other Multisector,0.3880275137484029,3,35.42757417102967,31.8499127399651,Thin / emerging space
+GRD,Grenada,Other Social Infrastructure,1.7731749560961043,7,47.81849912739965,51.22164048865619,Thin / emerging space
+GRD,Grenada,Population & Reproductive Health,0.1918272787068126,4,30.36649214659686,38.132635253054104,Low-activity space
+GRD,Grenada,Tourism,0.0037326798722026335,1,22.076788830715532,23.56020942408377,Low-activity space
+GRD,Grenada,Trade,0.0037326798722026335,1,22.076788830715532,23.56020942408377,Low-activity space
+GRD,Grenada,Transport & Storage,0.42999917102370944,4,35.95113438045375,38.132635253054104,Thin / emerging space
+GRD,Grenada,Water & Sanitation,0.6193846256942525,2,37.52181500872601,26.96335078534031,Thin / emerging space
+GTM,Guatemala,Agriculture & Natural Resources,43.424664986500524,20,85.51483420593368,85.68935427574172,Fragmented coordination space
+GTM,Guatemala,Business & Other Services,7.4137602721639135,11,65.61954624781849,67.71378708551484,Fragmented coordination space
+GTM,Guatemala,Communications,0.8590946277317416,5,39.61605584642234,42.40837696335078,Thin / emerging space
+GTM,Guatemala,Education,79.39942913385472,26,93.01919720767889,95.20069808027924,Fragmented coordination space
+GTM,Guatemala,Energy,3.9574022430574582,6,57.940663176265275,46.42233856893543,Thin / emerging space
+GTM,Guatemala,Environmental Protection,20.536286663736302,19,77.66143106457243,83.94415357766142,Fragmented coordination space
+GTM,Guatemala,Finance & Banking,0.9811505385543294,8,41.012216404886566,55.67190226876091,Thin / emerging space
+GTM,Guatemala,Governance & Civil Society,133.43690030386557,34,97.55671902268762,99.21465968586386,Fragmented coordination space
+GTM,Guatemala,Health,67.70486211737547,20,90.22687609075044,85.68935427574172,Fragmented coordination space
+GTM,Guatemala,Industry Mining & Construction,2.3855369033276266,13,50.78534031413613,73.56020942408377,Fragmented coordination space
+GTM,Guatemala,Other Multisector,13.530585125133591,24,72.42582897033158,92.49563699825481,Fragmented coordination space
+GTM,Guatemala,Other Social Infrastructure,8.977181196012888,19,67.5392670157068,83.94415357766142,Fragmented coordination space
+GTM,Guatemala,Population & Reproductive Health,38.08383663312192,17,84.11867364746945,81.32635253054102,Fragmented coordination space
+GTM,Guatemala,Tourism,0.5209603935231005,3,36.474694589877835,31.8499127399651,Thin / emerging space
+GTM,Guatemala,Trade,3.049140532290702,10,54.45026178010471,63.78708551483421,Thin / emerging space
+GTM,Guatemala,Transport & Storage,3.4738669878708026,4,56.54450261780105,38.132635253054104,Thin / emerging space
+GTM,Guatemala,Water & Sanitation,14.35701567521267,13,73.47294938917976,73.56020942408377,Fragmented coordination space
+GUY,Guyana,Agriculture & Natural Resources,5.716333763882129,9,62.478184991274,59.860383944153575,Thin / emerging space
+GUY,Guyana,Business & Other Services,2.4285592178371,4,51.48342059336824,38.132635253054104,Thin / emerging space
+GUY,Guyana,Communications,0.5866254726669234,3,37.347294938917976,31.8499127399651,Thin / emerging space
+GUY,Guyana,Education,27.005851601880888,20,81.50087260034904,85.68935427574172,Fragmented coordination space
+GUY,Guyana,Energy,4.116999239562832,8,58.46422338568935,55.67190226876091,Thin / emerging space
+GUY,Guyana,Environmental Protection,6.1097106761494935,12,62.82722513089005,70.85514834205934,Fragmented coordination space
+GUY,Guyana,Finance & Banking,0.1495143380625907,3,29.31937172774869,31.8499127399651,Low-activity space
+GUY,Guyana,Governance & Civil Society,69.93092072543071,12,91.2739965095986,70.85514834205934,Fragmented coordination space
+GUY,Guyana,Health,13.303603471549634,14,72.07678883071553,76.26527050610821,Fragmented coordination space
+GUY,Guyana,Industry Mining & Construction,2.9136728385175528,3,54.10122164048866,31.8499127399651,Thin / emerging space
+GUY,Guyana,Other Multisector,10.417202721039025,10,69.2844677137871,63.78708551483421,Anchor partnership space
+GUY,Guyana,Other Social Infrastructure,24.46917138030931,13,79.9301919720768,73.56020942408377,Fragmented coordination space
+GUY,Guyana,Population & Reproductive Health,3.4299369430657674,6,56.195462478184986,46.42233856893543,Thin / emerging space
+GUY,Guyana,Tourism,0.02914404372624117,1,24.083769633507853,23.56020942408377,Low-activity space
+GUY,Guyana,Trade,1.2567817811674422,3,44.32809773123909,31.8499127399651,Thin / emerging space
+GUY,Guyana,Transport & Storage,13.349144289868706,4,72.25130890052355,38.132635253054104,Anchor partnership space
+GUY,Guyana,Water & Sanitation,0.1102751619503173,5,28.097731239092493,42.40837696335078,Low-activity space
+HTI,Haiti,Agriculture & Natural Resources,76.46664016816139,19,92.32111692844677,83.94415357766142,Fragmented coordination space
+HTI,Haiti,Business & Other Services,6.2132917744655884,6,63.17626527050611,46.42233856893543,Thin / emerging space
+HTI,Haiti,Communications,1.9108852522112507,5,48.51657940663176,42.40837696335078,Thin / emerging space
+HTI,Haiti,Education,118.23747934274554,25,96.33507853403141,94.06631762652705,Fragmented coordination space
+HTI,Haiti,Energy,11.615744914975565,10,70.68062827225131,63.78708551483421,Anchor partnership space
+HTI,Haiti,Environmental Protection,11.542197266328808,15,70.50610820244329,78.1849912739965,Fragmented coordination space
+HTI,Haiti,Finance & Banking,6.545008169926599,6,64.3979057591623,46.42233856893543,Thin / emerging space
+HTI,Haiti,Governance & Civil Society,149.00838720184365,26,98.08027923211169,95.20069808027924,Fragmented coordination space
+HTI,Haiti,Health,111.3230308608443,24,95.6369982547993,92.49563699825481,Fragmented coordination space
+HTI,Haiti,Industry Mining & Construction,0.5434711865836847,7,36.99825479930192,51.22164048865619,Thin / emerging space
+HTI,Haiti,Other Multisector,35.22219267847444,22,83.42059336823735,89.09249563699827,Fragmented coordination space
+HTI,Haiti,Other Social Infrastructure,74.98679212758994,17,92.14659685863874,81.32635253054102,Fragmented coordination space
+HTI,Haiti,Population & Reproductive Health,224.1956848555195,16,99.30191972076788,80.0174520069808,Fragmented coordination space
+HTI,Haiti,Tourism,2.719092965508023,4,53.22862129144852,38.132635253054104,Thin / emerging space
+HTI,Haiti,Trade,2.737683957678818,5,53.403141361256544,42.40837696335078,Thin / emerging space
+HTI,Haiti,Transport & Storage,72.17596118938555,5,91.62303664921467,42.40837696335078,Anchor partnership space
+HTI,Haiti,Water & Sanitation,52.84428442109069,19,87.60907504363001,83.94415357766142,Fragmented coordination space
+HND,Honduras,Agriculture & Natural Resources,45.88467676413446,24,86.2129144851658,92.49563699825481,Fragmented coordination space
+HND,Honduras,Business & Other Services,12.883686550435291,9,71.72774869109948,59.860383944153575,Anchor partnership space
+HND,Honduras,Communications,0.9471977794524317,7,40.48865619546248,51.22164048865619,Thin / emerging space
+HND,Honduras,Education,77.69961036935054,28,92.67015706806284,96.8586387434555,Fragmented coordination space
+HND,Honduras,Energy,118.23816380359915,11,96.50959860383944,67.71378708551484,Fragmented coordination space
+HND,Honduras,Environmental Protection,17.07808573395452,22,75.21815008726004,89.09249563699827,Fragmented coordination space
+HND,Honduras,Finance & Banking,1.1038278990024104,8,42.40837696335078,55.67190226876091,Thin / emerging space
+HND,Honduras,Governance & Civil Society,222.55530057686474,29,99.12739965095986,97.38219895287958,Fragmented coordination space
+HND,Honduras,Health,68.01664297519463,27,90.57591623036649,96.07329842931938,Fragmented coordination space
+HND,Honduras,Industry Mining & Construction,13.66994479295112,9,72.6003490401396,59.860383944153575,Anchor partnership space
+HND,Honduras,Other Multisector,30.11724611328685,22,82.19895287958116,89.09249563699827,Fragmented coordination space
+HND,Honduras,Other Social Infrastructure,56.25064912631203,22,88.30715532286213,89.09249563699827,Fragmented coordination space
+HND,Honduras,Population & Reproductive Health,21.871185799396244,11,78.70855148342059,67.71378708551484,Fragmented coordination space
+HND,Honduras,Tourism,0.5329115143427431,5,36.64921465968586,42.40837696335078,Thin / emerging space
+HND,Honduras,Trade,3.594298181552548,5,56.8935427574171,42.40837696335078,Thin / emerging space
+HND,Honduras,Transport & Storage,57.252994732769615,9,88.65619546247818,59.860383944153575,Anchor partnership space
+HND,Honduras,Water & Sanitation,47.92997362073399,18,87.08551483420594,82.4607329842932,Fragmented coordination space
+JAM,Jamaica,Agriculture & Natural Resources,6.788204583205385,9,64.74694589877836,59.860383944153575,Thin / emerging space
+JAM,Jamaica,Business & Other Services,0.2852681969380389,5,33.1588132635253,42.40837696335078,Thin / emerging space
+JAM,Jamaica,Communications,0.3821710809325114,3,34.904013961605585,31.8499127399651,Thin / emerging space
+JAM,Jamaica,Education,4.244737470218545,20,58.63874345549738,85.68935427574172,Fragmented coordination space
+JAM,Jamaica,Energy,2.502067441780341,7,51.832460732984295,51.22164048865619,Thin / emerging space
+JAM,Jamaica,Environmental Protection,2.616799238783919,10,52.5305410122164,63.78708551483421,Thin / emerging space
+JAM,Jamaica,Finance & Banking,0.21519527500167493,5,31.239092495637,42.40837696335078,Low-activity space
+JAM,Jamaica,Governance & Civil Society,25.73848438719399,18,80.45375218150087,82.4607329842932,Fragmented coordination space
+JAM,Jamaica,Health,15.611433805360642,15,74.69458987783595,78.1849912739965,Fragmented coordination space
+JAM,Jamaica,Industry Mining & Construction,0.14715822518097343,7,29.144851657940663,51.22164048865619,Low-activity space
+JAM,Jamaica,Other Multisector,2.614449225905382,14,52.35602094240838,76.26527050610821,Fragmented coordination space
+JAM,Jamaica,Other Social Infrastructure,3.351942930696886,13,55.846422338568935,73.56020942408377,Fragmented coordination space
+JAM,Jamaica,Population & Reproductive Health,22.27250516374224,7,78.88307155322862,51.22164048865619,Anchor partnership space
+JAM,Jamaica,Tourism,0.062498703491967934,4,26.352530541012214,38.132635253054104,Low-activity space
+JAM,Jamaica,Trade,0.5193002560775958,6,36.3001745200698,46.42233856893543,Thin / emerging space
+JAM,Jamaica,Transport & Storage,0.10699053411619226,3,27.923211169284468,31.8499127399651,Low-activity space
+JAM,Jamaica,Water & Sanitation,1.3507201480403757,3,45.0261780104712,31.8499127399651,Thin / emerging space
+MEX,Mexico,Agriculture & Natural Resources,11.361448425278846,18,70.15706806282722,82.4607329842932,Fragmented coordination space
+MEX,Mexico,Business & Other Services,39.96136645335403,7,84.46771378708551,51.22164048865619,Anchor partnership space
+MEX,Mexico,Communications,0.2521164630722665,3,32.11169284467714,31.8499127399651,Low-activity space
+MEX,Mexico,Education,68.17563786736146,35,90.75043630017451,99.47643979057592,Fragmented coordination space
+MEX,Mexico,Energy,98.69356553359871,10,94.24083769633508,63.78708551483421,Anchor partnership space
+MEX,Mexico,Environmental Protection,131.8069508783583,16,97.38219895287958,80.0174520069808,Fragmented coordination space
+MEX,Mexico,Finance & Banking,88.35070758500503,11,93.54275741710296,67.71378708551484,Fragmented coordination space
+MEX,Mexico,Governance & Civil Society,135.8555795562808,32,97.90575916230367,98.42931937172776,Fragmented coordination space
+MEX,Mexico,Health,35.20163230353803,25,83.24607329842932,94.06631762652705,Fragmented coordination space
+MEX,Mexico,Industry Mining & Construction,2.508247181570594,14,52.00698080279233,76.26527050610821,Fragmented coordination space
+MEX,Mexico,Other Multisector,19.028248365777547,24,76.09075043630017,92.49563699825481,Fragmented coordination space
+MEX,Mexico,Other Social Infrastructure,73.11662898360524,23,91.97207678883072,90.92495636998254,Fragmented coordination space
+MEX,Mexico,Population & Reproductive Health,1.9298367998810058,10,48.69109947643979,63.78708551483421,Thin / emerging space
+MEX,Mexico,Tourism,0.03249398919137527,2,24.60732984293194,26.96335078534031,Low-activity space
+MEX,Mexico,Trade,0.1918735962764099,5,30.54101221640489,42.40837696335078,Low-activity space
+MEX,Mexico,Transport & Storage,4.672158212047898,10,59.860383944153575,63.78708551483421,Thin / emerging space
+MEX,Mexico,Water & Sanitation,89.69616480580248,11,93.89179755671903,67.71378708551484,Fragmented coordination space
+MSR,Montserrat,Agriculture & Natural Resources,0.0823279943157314,1,27.05061082024433,23.56020942408377,Low-activity space
+MSR,Montserrat,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+MSR,Montserrat,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+MSR,Montserrat,Education,1.8414241475367765,1,47.99301919720768,23.56020942408377,Thin / emerging space
+MSR,Montserrat,Energy,1.5848087495612555,1,46.94589877835951,23.56020942408377,Thin / emerging space
+MSR,Montserrat,Environmental Protection,1.3179227997283827,1,44.67713787085515,23.56020942408377,Thin / emerging space
+MSR,Montserrat,Finance & Banking,1.268728539963721,1,44.50261780104712,23.56020942408377,Thin / emerging space
+MSR,Montserrat,Governance & Civil Society,12.371386733295557,1,71.20418848167539,23.56020942408377,Anchor partnership space
+MSR,Montserrat,Health,7.9928756537800005,2,66.66666666666666,26.96335078534031,Thin / emerging space
+MSR,Montserrat,Industry Mining & Construction,0.00040262628533489997,1,21.465968586387437,23.56020942408377,Low-activity space
+MSR,Montserrat,Other Multisector,0.14245400836211472,1,28.970331588132638,23.56020942408377,Low-activity space
+MSR,Montserrat,Other Social Infrastructure,1.4299460329513531,3,45.54973821989529,31.8499127399651,Thin / emerging space
+MSR,Montserrat,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+MSR,Montserrat,Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+MSR,Montserrat,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+MSR,Montserrat,Transport & Storage,7.991882865274628,1,66.49214659685863,23.56020942408377,Thin / emerging space
+MSR,Montserrat,Water & Sanitation,0.02208618227847953,1,23.38568935427574,23.56020942408377,Low-activity space
+NIC,Nicaragua,Agriculture & Natural Resources,20.643531385344037,23,77.83595113438045,90.92495636998254,Fragmented coordination space
+NIC,Nicaragua,Business & Other Services,4.628586988732574,8,59.51134380453752,55.67190226876091,Thin / emerging space
+NIC,Nicaragua,Communications,1.8520617841228664,6,48.167539267015705,46.42233856893543,Thin / emerging space
+NIC,Nicaragua,Education,25.857386610893027,25,80.6282722513089,94.06631762652705,Fragmented coordination space
+NIC,Nicaragua,Energy,56.08645016620636,9,88.1326352530541,59.860383944153575,Anchor partnership space
+NIC,Nicaragua,Environmental Protection,5.751950305257488,14,62.652705061082024,76.26527050610821,Fragmented coordination space
+NIC,Nicaragua,Finance & Banking,0.9910418192403129,5,41.18673647469459,42.40837696335078,Thin / emerging space
+NIC,Nicaragua,Governance & Civil Society,219.9301069172371,25,98.77835951134381,94.06631762652705,Fragmented coordination space
+NIC,Nicaragua,Health,105.5055490856501,20,94.9389179755672,85.68935427574172,Fragmented coordination space
+NIC,Nicaragua,Industry Mining & Construction,1.5355216357576944,6,46.42233856893543,46.42233856893543,Thin / emerging space
+NIC,Nicaragua,Other Multisector,56.058508495048386,20,87.95811518324608,85.68935427574172,Fragmented coordination space
+NIC,Nicaragua,Other Social Infrastructure,12.72791181169209,16,71.55322862129145,80.0174520069808,Fragmented coordination space
+NIC,Nicaragua,Population & Reproductive Health,11.496487790527155,11,70.33158813263525,67.71378708551484,Fragmented coordination space
+NIC,Nicaragua,Tourism,0.05680031008333866,2,26.17801047120419,26.96335078534031,Low-activity space
+NIC,Nicaragua,Trade,1.033979,2,41.8848167539267,26.96335078534031,Thin / emerging space
+NIC,Nicaragua,Transport & Storage,281.23694902393817,6,99.65095986038395,46.42233856893543,Anchor partnership space
+NIC,Nicaragua,Water & Sanitation,78.56879553693597,13,92.84467713787086,73.56020942408377,Fragmented coordination space
+PAN,Panama,Agriculture & Natural Resources,2.4110250071830914,11,51.13438045375218,67.71378708551484,Fragmented coordination space
+PAN,Panama,Business & Other Services,0.19937950833638174,5,30.89005235602094,42.40837696335078,Low-activity space
+PAN,Panama,Communications,0.23194986595947595,3,31.93717277486911,31.8499127399651,Low-activity space
+PAN,Panama,Education,6.112133939360684,26,63.00174520069808,95.20069808027924,Fragmented coordination space
+PAN,Panama,Energy,1.0286499077716653,4,41.710296684118674,38.132635253054104,Thin / emerging space
+PAN,Panama,Environmental Protection,47.16559133459983,15,86.73647469458989,78.1849912739965,Fragmented coordination space
+PAN,Panama,Finance & Banking,0.08974146820885426,5,27.399650959860384,42.40837696335078,Low-activity space
+PAN,Panama,Governance & Civil Society,26.454797344968615,22,80.97731239092496,89.09249563699827,Fragmented coordination space
+PAN,Panama,Health,6.341697707311802,12,63.6998254799302,70.85514834205934,Fragmented coordination space
+PAN,Panama,Industry Mining & Construction,0.0551285653260582,3,26.003490401396164,31.8499127399651,Low-activity space
+PAN,Panama,Other Multisector,1.5316709443110303,14,46.247818499127405,76.26527050610821,Fragmented coordination space
+PAN,Panama,Other Social Infrastructure,1.744979181453085,13,47.4694589877836,73.56020942408377,Fragmented coordination space
+PAN,Panama,Population & Reproductive Health,13.913646174705208,7,72.94938917975567,51.22164048865619,Anchor partnership space
+PAN,Panama,Tourism,0.21614377651951103,2,31.413612565445025,26.96335078534031,Low-activity space
+PAN,Panama,Trade,0.19492733569287415,4,30.715532286212916,38.132635253054104,Low-activity space
+PAN,Panama,Transport & Storage,260.6728014584398,9,99.47643979057592,59.860383944153575,Anchor partnership space
+PAN,Panama,Water & Sanitation,3.1653481465187068,6,54.973821989528794,46.42233856893543,Thin / emerging space
+PRY,Paraguay,Agriculture & Natural Resources,24.813716460012014,19,80.10471204188482,83.94415357766142,Fragmented coordination space
+PRY,Paraguay,Business & Other Services,2.7004857473394783,7,52.879581151832454,51.22164048865619,Thin / emerging space
+PRY,Paraguay,Communications,1.4946689353249305,7,45.89877835951135,51.22164048865619,Thin / emerging space
+PRY,Paraguay,Education,11.344352047037622,25,69.9825479930192,94.06631762652705,Fragmented coordination space
+PRY,Paraguay,Energy,20.132552014732088,4,77.31239092495636,38.132635253054104,Anchor partnership space
+PRY,Paraguay,Environmental Protection,5.051011601128018,13,61.08202443280978,73.56020942408377,Fragmented coordination space
+PRY,Paraguay,Finance & Banking,0.2795012352569359,7,32.63525305410122,51.22164048865619,Low-activity space
+PRY,Paraguay,Governance & Civil Society,19.343556701594363,24,76.43979057591623,92.49563699825481,Fragmented coordination space
+PRY,Paraguay,Health,8.568299539525155,18,67.36474694589877,82.4607329842932,Fragmented coordination space
+PRY,Paraguay,Industry Mining & Construction,6.653223374810753,6,64.57242582897034,46.42233856893543,Thin / emerging space
+PRY,Paraguay,Other Multisector,3.47023176614327,20,56.36998254799301,85.68935427574172,Fragmented coordination space
+PRY,Paraguay,Other Social Infrastructure,5.154741010417431,16,61.25654450261781,80.0174520069808,Fragmented coordination space
+PRY,Paraguay,Population & Reproductive Health,4.645625946292104,10,59.68586387434554,63.78708551483421,Thin / emerging space
+PRY,Paraguay,Tourism,0.3316550064179267,6,34.20593368237348,46.42233856893543,Thin / emerging space
+PRY,Paraguay,Trade,0.09844766666666667,4,27.57417102966841,38.132635253054104,Low-activity space
+PRY,Paraguay,Transport & Storage,43.13810598853206,7,85.34031413612566,51.22164048865619,Anchor partnership space
+PRY,Paraguay,Water & Sanitation,8.239944958769176,10,67.01570680628272,63.78708551483421,Anchor partnership space
+PER,Peru,Agriculture & Natural Resources,66.89268970136132,25,90.0523560209424,94.06631762652705,Fragmented coordination space
+PER,Peru,Business & Other Services,7.317579194381065,11,65.09598603839441,67.71378708551484,Fragmented coordination space
+PER,Peru,Communications,2.344382491579602,9,50.43630017452006,59.860383944153575,Thin / emerging space
+PER,Peru,Education,42.91252541112224,33,85.16579406631763,98.86561954624781,Fragmented coordination space
+PER,Peru,Energy,39.4990314630028,8,84.29319371727748,55.67190226876091,Anchor partnership space
+PER,Peru,Environmental Protection,110.01363341073835,22,95.46247818499127,89.09249563699827,Fragmented coordination space
+PER,Peru,Finance & Banking,53.47647589362091,8,87.78359511343804,55.67190226876091,Anchor partnership space
+PER,Peru,Governance & Civil Society,220.33940605881085,33,98.95287958115183,98.86561954624781,Fragmented coordination space
+PER,Peru,Health,189.55888482949695,21,98.60383944153578,87.34729493891797,Fragmented coordination space
+PER,Peru,Industry Mining & Construction,7.444637509997584,16,65.79406631762653,80.0174520069808,Fragmented coordination space
+PER,Peru,Other Multisector,42.16945564080354,27,84.64223385689354,96.07329842931938,Fragmented coordination space
+PER,Peru,Other Social Infrastructure,14.98297431921595,23,74.3455497382199,90.92495636998254,Fragmented coordination space
+PER,Peru,Population & Reproductive Health,17.99043616556015,15,75.74171029668412,78.1849912739965,Fragmented coordination space
+PER,Peru,Tourism,3.3706117467247965,7,56.02094240837696,51.22164048865619,Thin / emerging space
+PER,Peru,Trade,2.3358858606408752,10,50.26178010471204,63.78708551483421,Thin / emerging space
+PER,Peru,Transport & Storage,22.944325267869754,10,79.40663176265271,63.78708551483421,Anchor partnership space
+PER,Peru,Water & Sanitation,20.10955101617536,11,77.13787085514834,67.71378708551484,Fragmented coordination space
+KNA,Saint Kitts and Nevis,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+KNA,Saint Kitts and Nevis,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+LCA,Saint Lucia,Agriculture & Natural Resources,6.343561289049667,8,63.87434554973822,55.67190226876091,Thin / emerging space
+LCA,Saint Lucia,Business & Other Services,0.4869194221683118,7,36.12565445026178,51.22164048865619,Thin / emerging space
+LCA,Saint Lucia,Communications,1.353415,1,45.20069808027923,23.56020942408377,Thin / emerging space
+LCA,Saint Lucia,Education,3.349873233263257,15,55.67190226876091,78.1849912739965,Fragmented coordination space
+LCA,Saint Lucia,Energy,3.1231862981959377,5,54.62478184991274,42.40837696335078,Thin / emerging space
+LCA,Saint Lucia,Environmental Protection,2.4365943990787233,8,51.65794066317626,55.67190226876091,Thin / emerging space
+LCA,Saint Lucia,Finance & Banking,3.3198840000001635,2,55.497382198952884,26.96335078534031,Thin / emerging space
+LCA,Saint Lucia,Governance & Civil Society,9.183082873446626,9,67.71378708551484,59.860383944153575,Anchor partnership space
+LCA,Saint Lucia,Health,5.260341950738739,9,61.60558464223386,59.860383944153575,Thin / emerging space
+LCA,Saint Lucia,Industry Mining & Construction,0.11052613172301286,4,28.272251308900525,38.132635253054104,Low-activity space
+LCA,Saint Lucia,Other Multisector,2.300110361281802,9,49.73821989528796,59.860383944153575,Thin / emerging space
+LCA,Saint Lucia,Other Social Infrastructure,2.304105098718877,10,49.91273996509599,63.78708551483421,Thin / emerging space
+LCA,Saint Lucia,Population & Reproductive Health,0.18843011256949474,4,30.19197207678883,38.132635253054104,Low-activity space
+LCA,Saint Lucia,Tourism,0.6452028365829546,3,37.87085514834206,31.8499127399651,Thin / emerging space
+LCA,Saint Lucia,Trade,0.005310046060433099,1,22.5130890052356,23.56020942408377,Low-activity space
+LCA,Saint Lucia,Transport & Storage,2.3866883626352755,3,50.959860383944154,31.8499127399651,Thin / emerging space
+LCA,Saint Lucia,Water & Sanitation,0.287133251153392,4,33.50785340314136,38.132635253054104,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Agriculture & Natural Resources,4.7608010164130095,9,60.38394415357766,59.860383944153575,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Business & Other Services,0.026097585712494768,4,23.56020942408377,38.132635253054104,Low-activity space
+VCT,Saint Vincent and the Grenadines,Communications,3.689233936463419,3,57.417102966841185,31.8499127399651,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Education,1.3279252542014417,13,44.85165794066317,73.56020942408377,Fragmented coordination space
+VCT,Saint Vincent and the Grenadines,Energy,0.14021180383046886,3,28.79581151832461,31.8499127399651,Low-activity space
+VCT,Saint Vincent and the Grenadines,Environmental Protection,1.2257465240981704,7,43.80453752181501,51.22164048865619,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Finance & Banking,0.033161333333333334,1,24.956369982547994,23.56020942408377,Low-activity space
+VCT,Saint Vincent and the Grenadines,Governance & Civil Society,1.6250510968952687,7,47.294938917975564,51.22164048865619,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Health,0.5804366826358028,6,37.17277486910995,46.42233856893543,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Industry Mining & Construction,0.07046225519443834,4,26.701570680628272,38.132635253054104,Low-activity space
+VCT,Saint Vincent and the Grenadines,Other Multisector,1.2246094061739574,8,43.63001745200698,55.67190226876091,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Other Social Infrastructure,2.166073673085525,7,49.389179755671904,51.22164048865619,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Population & Reproductive Health,0.22995264385841682,3,31.762652705061083,31.8499127399651,Low-activity space
+VCT,Saint Vincent and the Grenadines,Tourism,0.2852742679277146,3,33.33333333333333,31.8499127399651,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Trade,0.0040102679277146,1,22.338568935427574,23.56020942408377,Low-activity space
+VCT,Saint Vincent and the Grenadines,Transport & Storage,3.474595342132922,4,56.719022687609076,38.132635253054104,Thin / emerging space
+VCT,Saint Vincent and the Grenadines,Water & Sanitation,0.1823915767825672,2,29.84293193717277,26.96335078534031,Low-activity space
+SUR,Suriname,Agriculture & Natural Resources,1.4177493072158622,10,45.37521815008726,63.78708551483421,Thin / emerging space
+SUR,Suriname,Business & Other Services,0.06867305144434514,6,26.527050610820247,46.42233856893543,Low-activity space
+SUR,Suriname,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+SUR,Suriname,Education,19.619817727386877,13,76.61431064572426,73.56020942408377,Fragmented coordination space
+SUR,Suriname,Energy,0.961195063449327,6,40.66317626527051,46.42233856893543,Thin / emerging space
+SUR,Suriname,Environmental Protection,1.7702290172258197,12,47.64397905759162,70.85514834205934,Fragmented coordination space
+SUR,Suriname,Finance & Banking,0.04058666666666667,2,25.654450261780106,26.96335078534031,Low-activity space
+SUR,Suriname,Governance & Civil Society,1.2469723981564556,12,43.97905759162304,70.85514834205934,Fragmented coordination space
+SUR,Suriname,Health,7.764699667773699,11,66.14310645724258,67.71378708551484,Fragmented coordination space
+SUR,Suriname,Industry Mining & Construction,0.28140668921737527,3,32.809773123909245,31.8499127399651,Low-activity space
+SUR,Suriname,Other Multisector,2.2095252915493986,13,49.56369982547993,73.56020942408377,Fragmented coordination space
+SUR,Suriname,Other Social Infrastructure,3.671855093055075,9,57.24258289703316,59.860383944153575,Thin / emerging space
+SUR,Suriname,Population & Reproductive Health,0.693040081412318,3,38.56893542757417,31.8499127399651,Thin / emerging space
+SUR,Suriname,Tourism,0.029773603700940166,1,24.25828970331588,23.56020942408377,Low-activity space
+SUR,Suriname,Trade,0.07903459236923586,2,26.876090750436298,26.96335078534031,Low-activity space
+SUR,Suriname,Transport & Storage,0.11355579993021764,3,28.44677137870855,31.8499127399651,Low-activity space
+SUR,Suriname,Water & Sanitation,1.1951949494463874,6,43.455497382198956,46.42233856893543,Thin / emerging space
+TTO,Trinidad and Tobago,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Transport & Storage,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TTO,Trinidad and Tobago,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+TCA,Turks and Caicos Islands,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Agriculture & Natural Resources,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Business & Other Services,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Communications,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Education,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Energy,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Environmental Protection,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Governance & Civil Society,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Industry Mining & Construction,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Other Multisector,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Other Social Infrastructure,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Population & Reproductive Health,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Trade,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Transport & Storage,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+URY,Uruguay,Water & Sanitation,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Agriculture & Natural Resources,8.541062849783533,10,67.19022687609075,63.78708551483421,Anchor partnership space
+VEN,Venezuela (Bolivarian Republic of),Business & Other Services,0.9327073433039962,3,40.139616055846425,31.8499127399651,Thin / emerging space
+VEN,Venezuela (Bolivarian Republic of),Communications,0.16105325331383183,2,29.668411867364746,26.96335078534031,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Education,26.56399263893684,27,81.15183246073299,96.07329842931938,Fragmented coordination space
+VEN,Venezuela (Bolivarian Republic of),Energy,0.009109981677589566,1,23.036649214659686,23.56020942408377,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Environmental Protection,2.6505394365318566,9,52.70506108202443,59.860383944153575,Thin / emerging space
+VEN,Venezuela (Bolivarian Republic of),Finance & Banking,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Governance & Civil Society,130.69981731470565,24,97.20767888307155,92.49563699825481,Fragmented coordination space
+VEN,Venezuela (Bolivarian Republic of),Health,67.91924428389582,21,90.40139616055846,87.34729493891797,Fragmented coordination space
+VEN,Venezuela (Bolivarian Republic of),Industry Mining & Construction,0.2163919907368336,5,31.588132635253054,42.40837696335078,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Other Multisector,6.216809138348882,17,63.35078534031413,81.32635253054102,Fragmented coordination space
+VEN,Venezuela (Bolivarian Republic of),Other Social Infrastructure,3.152227257388716,14,54.79930191972077,76.26527050610821,Fragmented coordination space
+VEN,Venezuela (Bolivarian Republic of),Population & Reproductive Health,46.57988507014292,10,86.38743455497382,63.78708551483421,Anchor partnership space
+VEN,Venezuela (Bolivarian Republic of),Tourism,0.0,0,10.732984293193718,10.732984293193718,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Trade,0.27060831538326163,3,32.460732984293195,31.8499127399651,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Transport & Storage,0.0084119490029127,3,22.862129144851657,31.8499127399651,Low-activity space
+VEN,Venezuela (Bolivarian Republic of),Water & Sanitation,5.504700510180683,10,62.129144851657934,63.78708551483421,Thin / emerging space
