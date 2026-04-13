@@ -407,35 +407,77 @@ elif page == "Sectoral Analysis":
 
     st.divider()
 
-    # ── Growth rates ─────────────────────────────────────────────────────────
-    st.subheader("Sector growth: 2002–2010 vs 2015–2024 average")
-    early = (
-        by_sector_year[by_sector_year["year"].between(2002, 2010)]
-        .groupby("sector")["total_oda"].mean().rename("early_avg")
-    )
-    late = (
-        by_sector_year[by_sector_year["year"].between(2015, 2024)]
-        .groupby("sector")["total_oda"].mean().rename("late_avg")
-    )
-    growth = pd.concat([early, late], axis=1).dropna()
-    growth["growth_pct"] = (growth["late_avg"] - growth["early_avg"]) / growth["early_avg"].abs() * 100
-    growth = growth.reset_index().sort_values("growth_pct", ascending=False)
+    # ── CAGR helper ───────────────────────────────────────────────────────────
+    def sector_cagr(start_yrs, end_yrs):
+        """
+        Compound Annual Growth Rate between two 3-year window averages.
+        n = midpoint(end_yrs) - midpoint(start_yrs).
+        Rows where either window average <= 0 are excluded.
+        """
+        s = (by_sector_year[by_sector_year["year"].isin(start_yrs)]
+             .groupby("sector")["total_oda"].mean())
+        e = (by_sector_year[by_sector_year["year"].isin(end_yrs)]
+             .groupby("sector")["total_oda"].mean())
+        n = (sum(end_yrs) / len(end_yrs)) - (sum(start_yrs) / len(start_yrs))
+        df = pd.concat([s.rename("s"), e.rename("e")], axis=1).dropna()
+        df = df[(df["s"] > 0) & (df["e"] > 0)]
+        df["cagr"] = ((df["e"] / df["s"]) ** (1 / n) - 1) * 100
+        return df["cagr"].reset_index()
 
-    colours = ["#2C73D2" if v >= 0 else "#FF6F61" for v in growth["growth_pct"]]
-    fig_growth = go.Figure(go.Bar(
-        y=growth["sector"], x=growth["growth_pct"],
+    # ── Full-period CAGR ──────────────────────────────────────────────────────
+    st.subheader("Sector CAGR — full period (2002–2024)")
+    st.caption(
+        "3-year averages at each endpoint: 2002–2004 → 2022–2024 · n = 20 years. "
+        "Blue = positive growth, red = contraction."
+    )
+    full = sector_cagr([2002, 2003, 2004], [2022, 2023, 2024])
+    full = full.sort_values("cagr", ascending=False)
+
+    fig_full = go.Figure(go.Bar(
+        y=full["sector"], x=full["cagr"],
         orientation="h",
-        marker_color=colours,
-        text=growth["growth_pct"].round(0).astype(int).astype(str) + "%",
+        marker_color=["#2C73D2" if v >= 0 else "#FF6F61" for v in full["cagr"]],
+        text=full["cagr"].round(1).astype(str) + "%",
         textposition="outside",
     ))
-    fig_growth.update_layout(
+    fig_full.update_layout(
         height=520,
-        xaxis_title="Growth (%)",
+        xaxis_title="CAGR (%)",
         yaxis=dict(categoryorder="total ascending"),
         showlegend=False,
     )
-    st.plotly_chart(fig_growth, use_container_width=True)
+    st.plotly_chart(fig_full, use_container_width=True)
+
+    st.divider()
+
+    # ── Sub-period CAGR ───────────────────────────────────────────────────────
+    st.subheader("Sector CAGR — sub-periods (2002–2013 vs 2013–2024)")
+    st.caption(
+        "3-year averages at each endpoint. "
+        "2002–2013: 2002–2004 → 2011–2013, n ≈ 9 years. "
+        "2013–2024: 2011–2013 → 2022–2024, n ≈ 11 years."
+    )
+    c1 = sector_cagr([2002, 2003, 2004], [2011, 2012, 2013]).rename(columns={"cagr": "2002–2013"})
+    c2 = sector_cagr([2011, 2012, 2013], [2022, 2023, 2024]).rename(columns={"cagr": "2013–2024"})
+    sub = c1.merge(c2, on="sector", how="outer").sort_values("2013–2024", ascending=False)
+
+    sub_long = sub.melt(id_vars="sector", var_name="Period", value_name="cagr")
+    fig_sub = px.bar(
+        sub_long, y="sector", x="cagr",
+        color="Period", barmode="group", orientation="h",
+        color_discrete_map={"2002–2013": "#0CA4A5", "2013–2024": "#2C73D2"},
+        text=sub_long["cagr"].round(1).astype(str) + "%",
+        labels={"cagr": "CAGR (%)", "sector": ""},
+    )
+    fig_sub.update_layout(
+        height=560,
+        yaxis=dict(categoryorder="total ascending"),
+        xaxis_title="CAGR (%)",
+        legend_title="Period",
+        uniformtext_minsize=8,
+        uniformtext_mode="hide",
+    )
+    st.plotly_chart(fig_sub, use_container_width=True)
 
 
 # ═════════════════════════════════════════════════════════════════════════════
