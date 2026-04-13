@@ -365,8 +365,17 @@ elif page == "Sectoral Analysis":
         st.plotly_chart(fig_sec_bar, use_container_width=True)
 
     with col_r:
+        # Group sectors 9+ into "Other" so pie % matches bar %
+        pie_data = recent_sec.head(8).copy()
+        if len(recent_sec) > 8:
+            other = pd.DataFrame([{
+                "sector": "Other",
+                "total_oda": recent_sec.iloc[8:]["total_oda"].sum(),
+                "share":     recent_sec.iloc[8:]["share"].sum(),
+            }])
+            pie_data = pd.concat([pie_data, other], ignore_index=True)
         fig_sec_pie = px.pie(
-            recent_sec.head(8), values="total_oda", names="sector",
+            pie_data, values="share", names="sector",
             hole=0.4,
             color_discrete_sequence=px.colors.qualitative.Set2,
         )
