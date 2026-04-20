@@ -184,17 +184,20 @@ def short_ctx(label):
 # ═════════════════════════════════════════════════════════════════════════════
 if page == "🏠 Guide":
     st.title("🏠 Welcome to the LAC ODA Partnership Dashboard")
-    st.caption("A decision-support tool to identify partnership opportunities for the World Bank across Latin America & the Caribbean.")
+    st.caption("A decision-support tool to identify partnership opportunities in Latin America & the Caribbean — designed for the World Bank, usable by any development organisation working in the region.")
 
     st.markdown(
         """
         ### What this dashboard does
-        This tool is built for **World Bank country and sector teams** (and
-        comparable development organisations working in LAC) who need to
-        identify **which other development agents are the best candidates for
-        co-financing or coordination in a specific country and sector**.
+        This tool was designed primarily for **World Bank country and sector
+        teams**, but the framework is general: **any development organisation
+        working in LAC** — other MDBs, bilateral agencies, UN bodies, or
+        philanthropic foundations — can use it to identify **which other
+        development agents are the best candidates for co-financing or
+        coordination in a specific country and sector**.
 
-        It answers the research question:
+        It answers the research question (framed here from the World Bank's
+        perspective):
 
         > **Which development agents financing Latin America and the Caribbean
         > represent the highest priority partnership opportunities for the
@@ -202,12 +205,17 @@ if page == "🏠 Guide":
         > presence — and how should priority levels (High / Medium / Low) be
         > assigned by country–sector combination?**
 
+        Other organisations can read the question with their own institution
+        in place of "the World Bank" — the underlying priority framework is
+        donor-agnostic.
+
         **Typical use case.** You work on the World Bank's Argentina team and
         want to scope partners for a new Health programme. Filter the dashboard
         to *Argentina × Health* and instantly see: which donors are already
         active, how large and persistent their engagement is, and how they rank
         in the priority framework (High / Medium / Low). Use this to shortlist
-        co-financing partners and benchmark the financing landscape.
+        co-financing partners and benchmark the financing landscape. The same
+        workflow applies to an IDB or UNDP team scoping their own country-sector.
 
         It combines 23 years of Official Development Assistance (ODA) data
         (OECD CRS / DAC2A, 2002–2024) into a two-stage prioritisation framework:
@@ -1056,10 +1064,11 @@ elif page == "📚 Methodology & Glossary":
 > combination?**
 
 This dashboard answers that question with a **two-stage framework** built on
-23 years of ODA data (2002–2024). The intended user is a **World Bank country
-or sector team** (or an analogous team at another development organisation)
-scoping partnership opportunities for a specific project in a specific
-country × sector.
+23 years of ODA data (2002–2024). It was designed primarily for **World Bank
+country and sector teams**, but the framework is donor-agnostic and can be
+used by **any development organisation working in LAC** (other MDBs, bilateral
+agencies, UN bodies, philanthropies) scoping partnership opportunities for a
+specific project in a specific country × sector.
 
 ---
 
@@ -1141,7 +1150,9 @@ where $n$ is the number of years between the midpoints of the two windows.
 
 ## Interpreting the dashboard
 
-Each page answers a specific question from the World Bank team's perspective:
+Each page answers a specific question from the perspective of a development
+team scoping partners in their country × sector (phrased from the World Bank's
+point of view, but the same logic applies to any other organisation):
 
 - **🗺️ Country–Sector Mapping** — *"What is the financing landscape in my
   country × sector, and how crowded is it?"*
