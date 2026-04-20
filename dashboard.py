@@ -184,24 +184,41 @@ def short_ctx(label):
 # ═════════════════════════════════════════════════════════════════════════════
 if page == "🏠 Guide":
     st.title("🏠 Welcome to the LAC ODA Partnership Dashboard")
-    st.caption("A decision-support tool for prioritising development partnerships in Latin America & the Caribbean.")
+    st.caption("A decision-support tool to identify partnership opportunities for the World Bank across Latin America & the Caribbean.")
 
     st.markdown(
         """
         ### What this dashboard does
-        This tool helps **policymakers, donor staff, and World Bank teams** answer a
-        single question:
+        This tool is built for **World Bank country and sector teams** (and
+        comparable development organisations working in LAC) who need to
+        identify **which other development agents are the best candidates for
+        co-financing or coordination in a specific country and sector**.
 
-        > **Where — in which countries and sectors — should each donor focus to
-        > build the most strategic development partnerships in LAC?**
+        It answers the research question:
+
+        > **Which development agents financing Latin America and the Caribbean
+        > represent the highest priority partnership opportunities for the
+        > World Bank, based on financing volume, sectoral focus, and country
+        > presence — and how should priority levels (High / Medium / Low) be
+        > assigned by country–sector combination?**
+
+        **Typical use case.** You work on the World Bank's Argentina team and
+        want to scope partners for a new Health programme. Filter the dashboard
+        to *Argentina × Health* and instantly see: which donors are already
+        active, how large and persistent their engagement is, and how they rank
+        in the priority framework (High / Medium / Low). Use this to shortlist
+        co-financing partners and benchmark the financing landscape.
 
         It combines 23 years of Official Development Assistance (ODA) data
         (OECD CRS / DAC2A, 2002–2024) into a two-stage prioritisation framework:
 
-        1. **Stage 1** — classifies every **country × sector** space by how crowded
-           and well-funded it is (the *context*).
-        2. **Stage 2** — classifies every **donor × country × sector** partnership
-           by how central that donor is in that space (the *priority*).
+        1. **Stage 1** — classifies every **country × sector** space by how
+           crowded and well-funded it is (the *context*). This tells you
+           *what kind of space* you're operating in.
+        2. **Stage 2** — classifies every **donor × country × sector**
+           partnership by how central that donor is in that space (the
+           *priority*). This tells you *which donors to prioritise* as
+           potential partners.
         """
     )
 
@@ -211,20 +228,21 @@ if page == "🏠 Guide":
     with c1:
         st.markdown("#### 1️⃣ Explore")
         st.markdown(
-            "Start with **📊 Descriptive Analysis** to see overall financing "
-            "volumes, trends, top donors, and sector patterns."
+            "Start with **📊 Descriptive Analysis** to understand overall LAC "
+            "financing volumes, trends, top donors, and sector patterns."
         )
     with c2:
-        st.markdown("#### 2️⃣ Map")
+        st.markdown("#### 2️⃣ Scope your country × sector")
         st.markdown(
-            "Move to **🗺️ Country–Sector Mapping** to see *where* financing "
-            "is concentrated and which spaces are under-served."
+            "Use sidebar filters to narrow to *your* country and sector, then "
+            "open **🗺️ Country–Sector Mapping** to read the financing landscape."
         )
     with c3:
-        st.markdown("#### 3️⃣ Prioritise")
+        st.markdown("#### 3️⃣ Shortlist partners")
         st.markdown(
-            "Use **🎯 Priority Framework** and **👥 Donor Profiles** to identify "
-            "high-priority partnerships and deep-dive into individual donors."
+            "Move to **🎯 Priority Framework**, **👥 Donor Profiles**, and "
+            "**📋 Priority Table** to identify High-priority donors as "
+            "candidate partners for your project."
         )
 
     st.divider()
@@ -1031,11 +1049,17 @@ elif page == "📚 Methodology & Glossary":
             """
 ## The research question
 
-> **Where — in which countries and sectors — should each donor focus to build
-> the most strategic development partnerships in LAC?**
+> **Which development agents financing Latin America and the Caribbean
+> represent the highest priority partnership opportunities for the World Bank,
+> based on financing volume, sectoral focus, and country presence — and how
+> should priority levels (High / Medium / Low) be assigned by country–sector
+> combination?**
 
-This dashboard answers that question with a **two-stage framework** built on 23
-years of ODA data (2002–2024).
+This dashboard answers that question with a **two-stage framework** built on
+23 years of ODA data (2002–2024). The intended user is a **World Bank country
+or sector team** (or an analogous team at another development organisation)
+scoping partnership opportunities for a specific project in a specific
+country × sector.
 
 ---
 
@@ -1117,10 +1141,16 @@ where $n$ is the number of years between the midpoints of the two windows.
 
 ## Interpreting the dashboard
 
-- **🗺️ Country–Sector Mapping** answers *"Where does financing go today, and where are the gaps?"*
-- **🎯 Priority Framework** answers *"Across all donors, where are the High-priority partnerships concentrated?"*
-- **👥 Donor Profiles** answers *"For one specific donor, where is it a central partner?"*
-- **📋 Priority Table** is the full underlying dataset for export.
+Each page answers a specific question from the World Bank team's perspective:
+
+- **🗺️ Country–Sector Mapping** — *"What is the financing landscape in my
+  country × sector, and how crowded is it?"*
+- **🎯 Priority Framework** — *"Across all donors in my country × sector,
+  who ranks High / Medium / Low as a partnership candidate?"*
+- **👥 Donor Profiles** — *"Donor X looks promising — where else are they a
+  central partner, and how big is their engagement in my space?"*
+- **📋 Priority Table** — the full underlying dataset for export, filtering,
+  and sharing with colleagues.
             """
         )
 
