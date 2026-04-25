@@ -68,8 +68,8 @@ HELP = {
     "context": (
         "Stage 1 country-sector classification based on total disbursement "
         "and number of active donors:\n"
-        "• Anchor = large volume + many donors\n"
-        "• Fragmented = many donors but small volume each\n"
+        "• Anchor = large volume + few concentrated donors\n"
+        "• Fragmented = many donors + moderate-to-high volume\n"
         "• Thin / emerging = few donors, growing activity\n"
         "• Low-activity = limited external financing presence"
     ),
@@ -656,10 +656,10 @@ elif page == "🗺️ Country–Sector Mapping":
     with st.expander("ℹ️ What do the context labels mean?"):
         st.markdown(
             """
-- **Anchor partnership space** — large volume **and** many donors (established, well-funded).
-- **Fragmented coordination space** — many donors but no single one dominates volume-wise.
+- **Anchor partnership space** — large volume with **few, concentrated donors** (established, well-funded partnerships).
+- **Fragmented coordination space** — many donors with moderate-to-high total volume; coordination is the key challenge.
 - **Thin / emerging space** — few donors, growing activity; strategic entry opportunity.
-- **Low-activity space** — limited disbursements and few donors; potential financing gap.
+- **Low-activity space** — low disbursements regardless of donor count; potential financing gap.
 
 See the **📚 Methodology** page for the full definitions and thresholds.
             """
@@ -1101,10 +1101,10 @@ across LAC) and assign one of four **context labels**:
 
 | Context | Disbursement | Donor count | Interpretation |
 |---|---|---|---|
-| **Anchor partnership space** | High (≥ P66) | High (≥ P66) | Established, well-funded space |
-| **Fragmented coordination space** | Low | High | Many donors but small volume each — coordination challenge |
-| **Thin / emerging space** | High | Low | Concentrated financing from few donors — strategic entry point |
-| **Low-activity space** | Low (< P33) | Low | Limited external financing — potential gap |
+| **Anchor partnership space** | High (≥ P67) | Low (< P67) | Well-funded space with concentrated, established partnerships |
+| **Fragmented coordination space** | Moderate-to-high (≥ P33) | High (≥ P67) | Many donors across a crowded space — coordination is the key challenge |
+| **Thin / emerging space** | Mid-range (P33–P67) | Low (< P67) | Some financing, few donors — potential for strategic entry |
+| **Low-activity space** | Low (< P33) | Any | Limited external financing regardless of donor count — potential gap |
 
 ---
 
@@ -1175,7 +1175,7 @@ point of view, but the same logic applies to any other organisation):
 
 **Active share** — Share of years in the analysis window where a donor disbursed > 0 in a given country-sector. A persistence measure.
 
-**Anchor partnership space** — A country-sector with both high total disbursement and a high number of active donors. Established, well-funded space.
+**Anchor partnership space** — A country-sector with high total disbursement and a low number of active donors (concentrated partnerships). Established, well-funded space.
 
 **CAGR (Compound Annual Growth Rate)** — Annualised growth rate between two points in time. We compute it between 3-year endpoint averages to reduce single-year noise.
 
@@ -1193,7 +1193,7 @@ point of view, but the same logic applies to any other organisation):
 
 **Embeddedness** — One of the three Stage 2 indicators. True if this country-sector represents a meaningful share of the donor's total portfolio.
 
-**Fragmented coordination space** — A country-sector with many active donors but low total disbursement. Suggests dispersed, small-scale engagement.
+**Fragmented coordination space** — A country-sector with many active donors and moderate-to-high total disbursement. Suggests crowded, dispersed engagement where coordination is the key challenge.
 
 **Gap** — Used informally for Low-activity spaces and for country-sectors where external financing presence is thin.
 
@@ -1201,7 +1201,7 @@ point of view, but the same logic applies to any other organisation):
 
 **LAC** — Latin America & the Caribbean.
 
-**Low-activity space** — A country-sector with both low disbursement and few donors. Potential financing gap.
+**Low-activity space** — A country-sector with low total disbursement, regardless of donor count. Potential financing gap or structural barrier.
 
 **MDB** — Multilateral Development Bank (e.g. IDB, CAF, World Bank).
 
@@ -1245,21 +1245,21 @@ For readers who want to understand the precise thresholds and formulas.
   across all LAC country-sectors.
 - **Donor count percentile** (`donor_count_pctile`) — rank of `cs_donor_count`
   across all LAC country-sectors.
-- **Cutoffs:** P33 (low threshold) and P66 (high threshold).
+- **Cutoffs:** P33 (low threshold) and P67 (high threshold).
 
 ### Stage 1 decision rule
 
+Sequential — first match wins:
+
 ```
-if disburse_pctile ≥ P66 and donor_count_pctile ≥ P66:
-    → "Anchor partnership space"
-elif donor_count_pctile ≥ P66:
+if disburse_pctile < P33:
+    → "Low-activity space"          # low disbursement, regardless of donor count
+elif disburse_pctile ≥ P33 and donor_count_pctile ≥ P67:
     → "Fragmented coordination space"
-elif disburse_pctile ≥ P66:
-    → "Thin / emerging space"
-elif disburse_pctile < P33 and donor_count_pctile < P33:
-    → "Low-activity space"
+elif disburse_pctile ≥ P67:
+    → "Anchor partnership space"    # high disburse, low donor count (by exclusion)
 else:
-    → (intermediate, absorbed into nearest label)
+    → "Thin / emerging space"       # P33 ≤ disburse < P67, donor count < P67
 ```
 
 ### Stage 2 indicator definitions
