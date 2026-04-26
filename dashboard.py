@@ -60,10 +60,10 @@ DTYPE_ORDER = ["Bilateral (DAC)", "MDB", "UN Agency", "Vertical Fund",
 # ─── Inline help strings (tooltips) ──────────────────────────────────────────
 HELP = {
     "priority": (
-        "Stage 2 engagement level: High = donor is a core partner in that "
-        "country-sector (strong on ≥2 of 3 indicators); Medium = strong on 1; "
-        "Low = assessed but not strong on any; Peripheral = not assessed "
-        "(too small or too short-lived to evaluate)."
+        "Stage 2 engagement level: High = strong on ≥2 of 3 indicators "
+        "(including disbursement or persistence); Medium = strong on 1; "
+        "Low = assessed but strong on none; Peripheral = not assessed "
+        "(no recent activity)."
     ),
     "context": (
         "Stage 1 country-sector classification based on total disbursement "
@@ -782,15 +782,15 @@ elif page == "🎯 Priority Framework":
         st.markdown(
             """
 Each donor × country × sector cell is assessed on three indicators:
-1. **Disbursement strength** — is the donor in the top tier of disbursement for this country-sector?
-2. **Persistence** — has the donor been consistently active across years?
-3. **Embeddedness** — does this country-sector represent a meaningful share of the donor's portfolio?
+1. **Disbursement strength** — is the donor in the top tier of recent disbursement within this country-sector, and above the global median?
+2. **Persistence** — was the donor active in at least 4 of the last 5 years (2020–2024) with stable disbursements (low CV)?
+3. **Embeddedness** — does this country-sector represent ≥ 15% of the donor's country portfolio?
 
 The number of "strong" indicators (`n_strong`) determines priority:
-- **High** → strong on ≥2 of 3 indicators
-- **Medium** → strong on exactly 1
-- **Low** → assessed but strong on 0
-- **Peripheral / not assessed** → too small / too short-lived to assess
+- **High** → `n_strong` ≥ 2, including disbursement or persistence
+- **Medium** → `n_strong` = 1
+- **Low** → assessed but `n_strong` = 0
+- **Peripheral / not assessed** → no active year in the recent window
 
 See the **📚 Methodology** page for the precise thresholds.
             """
@@ -1110,7 +1110,7 @@ The framework uses **four indicators**, each tied to a dimension of aid quality:
 | Indicator | Definition | What it captures |
 |---|---|---|
 | **Recent avg disbursement** (`recent_avg`) | Mean annual ODA over 2022–2024. Negative values retained. | Financing scale |
-| **Active years share** (`active_share`) | Years with disbursement > 0 over 23-year window ÷ 23. | Long-run persistence |
+| **Persistence** (`persistence_active_years`) | Active years in the last 5-year window (2020–2024), combined with a stability check (CV < 1.0). | Recent committed presence |
 | **Sector share** (`sector_share`) | Donor's total in (country, sector) ÷ donor's total in that country (all sectors). | Operational focus |
 | **Donor count** (`cs_donor_count`) | Distinct donors with any positive disbursement in 2022–2024. | Crowding / coordination complexity |
 
@@ -1161,15 +1161,16 @@ percentile rankings.
 | Flag | Condition | What it means |
 |---|---|---|
 | `disbursement_strong` | `recent_avg` ≥ P67 within country-sector (assessed donors only) **AND** ≥ P50 globally across all assessed rows | Top contributor in this space, above global median scale |
-| `persistence_strong` | `active_share` ≥ 0.50 **AND** `recent_active_years` ≥ 2 **AND** `cv_recent` < 1.0 | Long-run continuity, recent presence, and stable recent disbursements |
+| `persistence_strong` | `persistence_active_years` ≥ 4 out of last 5 years **AND** `cv_recent` < 1.0 | Committed recent presence with stable disbursements |
 | `embeddedness_strong` | `sector_share` ≥ 0.15 | This sector is ≥ 15% of the donor's country portfolio |
 
 `n_strong` = count of True flags (0, 1, 2, or 3).
 
-The **CV override**: if the coefficient of variation of recent disbursements
-(`cv_recent = std / mean` over 2022–2024) is ≥ 1.0, `persistence_strong` is
-forced to False — highly erratic recent disbursements are not rewarded as
-persistent engagement.
+**Persistence focuses on the last 5 years (2020–2024)**, not the full
+23-year history. A donor that entered the space recently but has been
+consistently active and stable is treated equivalently to one with a long
+track record. The CV check (`cv_recent < 1.0`) ensures that erratic or
+one-off disbursements don't masquerade as sustained engagement.
 
 The **global P50 floor** on disbursement prevents a top-ranked donor in a
 very small niche from qualifying on relative position alone.
@@ -1240,7 +1241,7 @@ team scoping partners in their country × sector:
             """
 ## Glossary
 
-**Active share** (`active_share`) — Count of years with disbursement > 0 in the full 23-year window ÷ 23. Ranges 0–1. A donor present in 18 of 23 years (78%) is fundamentally different from one present in 3 years (13%). Used in `persistence_strong`.
+**Active share** (`active_share`) — Count of years with disbursement > 0 in the full 23-year window ÷ 23. Ranges 0–1. Shown in the Priority Table for reference, but no longer used as a threshold in `persistence_strong`.
 
 **Active year** — A year in which the donor's annual disbursement in a given country-sector is strictly greater than zero.
 
@@ -1284,7 +1285,7 @@ team scoping partners in their country × sector:
 
 **Peripheral / not assessed** — A donor-country-sector cell that did not meet the minimum activity rule (< 1 active year in recent window or `recent_avg` ≤ 0). Kept in the output with flags set to False; excluded from within-country-sector rankings.
 
-**Persistence** (`persistence_strong`) — True if ALL three conditions hold: `active_share ≥ 0.50` (present at least half the 23-year window), `recent_active_years ≥ 2` (at least 2 active years in 2022–2024), and `cv_recent < 1.0` (no highly erratic recent disbursements).
+**Persistence** (`persistence_strong`) — True if the donor was active in at least **4 of the last 5 years** (2020–2024) AND `cv_recent < 1.0` (stable recent disbursements). Focuses entirely on recent committed presence — long-run historical track record is not penalised or rewarded.
 
 **Priority (Stage 2 label)** — High / Medium / Low / Peripheral. Classifies the strategic centrality of a donor in a specific country-sector.
 
@@ -1319,9 +1320,10 @@ Precise thresholds and rules for technically curious readers.
 ### Fixed assumptions
 
 1. Analysis window: 2002–2024 (23 years).
-2. Recent window: 2022–2024 (last 3 years), configurable in `settings.yaml`.
-3. Negative disbursements: retained everywhere as valid OECD corrections.
-4. No rows are dropped: donors failing the minimum activity rule are labeled
+2. Recent window: 2022–2024 (last 3 years) — used for `recent_avg` and `cv_recent`.
+3. Persistence window: 2020–2024 (last 5 years) — used for `persistence_active_years`.
+4. Negative disbursements: retained everywhere as valid OECD corrections.
+5. No rows are dropped: donors failing the minimum activity rule are labeled
    Peripheral / not assessed, not removed.
 
 ### Stage 1 — Percentile thresholds
@@ -1368,11 +1370,11 @@ disbursement_strong = (
 )
 
 # Persistence strength
-#   Long-run continuity + recent presence + stable recent disbursements
+#   Active in >= 4 of the last 5 years AND stable recent disbursements
+#   cv_recent = std_recent / recent_avg  (computed over 3-year recent window)
 persistence_strong = (
-    active_share >= 0.50
-    AND recent_active_years >= 2
-    AND cv_recent < 1.0          # cv_recent = std_recent / recent_avg
+    persistence_active_years >= 4   # out of last 5 years (2020–2024)
+    AND cv_recent < 1.0
 )
 
 # Embeddedness strength
