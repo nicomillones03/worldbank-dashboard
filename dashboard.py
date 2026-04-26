@@ -1072,87 +1072,154 @@ specific project in a specific country × sector.
 
 ---
 
+## Overview
+
+The framework assigns partnership priority levels to development finance actors
+at the granularity of **donor × country × sector**. It uses a two-stage
+approach: first classifying the structural context of each country-sector
+space, then evaluating each donor's position within that space.
+
+The framework is transparent, reproducible, and avoids arbitrary weighting
+schemes, PCA, Pareto dominance, or black-box composite scores. Classification
+is purely rule-based with interpretable thresholds.
+
+---
+
 ## Data sources
 
 - **OECD Creditor Reporting System (CRS)** — donor × recipient × sector × year
   activity-level records. Source of sector composition.
 - **OECD DAC2A (Gross ODA)** — donor × recipient × year authoritative volume
   totals. Used to anchor absolute disbursement amounts.
-- **World Bank WDI (GDP)** — for contextual normalisation (exploratory only).
 
 We combine the two OECD sources using an **allocation method**: DAC2A provides
-the total envelope, and CRS shares determine how that envelope is split across
-sectors. This preserves headline volumes while keeping sectoral detail.
+the total volume envelope, and CRS sector shares determine how that envelope
+is split across sectors. This preserves headline volumes while keeping
+sectoral detail.
 
-**Scope:** Latin America & the Caribbean, 35 countries. Regional aggregates
-(e.g. "America (Regional)") are **excluded** from country-level analysis.
+**Scope:** Latin America & the Caribbean, 35 countries, 17 sectors,
+2002–2024. Regional aggregates (e.g. "America (Regional)") are **excluded**
+from country-level analysis.
 
 ---
 
-## Stage 1 — Classifying country-sector context
+## Indicators
 
-For every **country × sector** space, we compute two things:
+The framework uses **four indicators**, each tied to a dimension of aid quality:
 
-1. **Recent avg disbursement** — mean annual ODA over the last 3 years (2022–2024), in USD millions.
-2. **Active donor count** — number of distinct donors that disbursed in the recent window.
+| Indicator | Definition | What it captures |
+|---|---|---|
+| **Recent avg disbursement** (`recent_avg`) | Mean annual ODA over 2022–2024. Negative values retained. | Financing scale |
+| **Active years share** (`active_share`) | Years with disbursement > 0 over 23-year window ÷ 23. | Long-run persistence |
+| **Sector share** (`sector_share`) | Donor's total in (country, sector) ÷ donor's total in that country (all sectors). | Operational focus |
+| **Donor count** (`cs_donor_count`) | Distinct donors with any positive disbursement in 2022–2024. | Crowding / coordination complexity |
 
-We then rank each country-sector on these two dimensions (percentile ranks
-across LAC) and assign one of four **context labels**:
+**Why volume alone is not enough.** A large one-time grant differs fundamentally
+from sustained programmatic engagement. The framework requires donors to
+demonstrate both scale *and* commitment (through persistence or focus) before
+receiving a High priority label.
 
-| Context | Disbursement | Donor count | Interpretation |
+---
+
+## Stage 1 — Country-sector context
+
+**Unit:** country × sector. **Inputs:** `cs_recent_avg` and `cs_donor_count`.
+
+Percentile ranks are computed across all 573 country-sector cells.
+Classification uses **sequential rules (first match wins)**:
+
+| Order | Label | Condition | Interpretation |
 |---|---|---|---|
-| **Anchor partnership space** | High (≥ P67) | Low (< P67) | Well-funded space with concentrated, established partnerships |
-| **Fragmented coordination space** | Moderate-to-high (≥ P33) | High (≥ P67) | Many donors across a crowded space — coordination is the key challenge |
-| **Thin / emerging space** | Mid-range (P33–P67) | Low (< P67) | Some financing, few donors — potential for strategic entry |
-| **Low-activity space** | Low (< P33) | Any | Limited external financing regardless of donor count — potential gap |
+| 1 | **Low-activity space** | `disburse_pctile` < P33 | Minimal financing — potential gap or structural barrier |
+| 2 | **Fragmented coordination space** | `disburse_pctile` ≥ P33 AND `donor_count_pctile` ≥ P67 | Moderate-to-high financing, many donors — coordination challenge |
+| 3 | **Anchor partnership space** | `disburse_pctile` ≥ P67 (and donor count < P67, by exclusion) | Well-funded, concentrated partnerships |
+| 4 | **Thin / emerging space** | Everything else (P33 ≤ disburse < P67, donor count < P67) | Some financing, few donors — growth potential |
+
+Low-activity spaces are identified first (bottom third by disbursement,
+regardless of donor count). Among the rest, high donor-count spaces are
+Fragmented; high-disbursement / low-donor-count spaces are Anchor; the
+residual is Thin/emerging.
 
 ---
 
-## Stage 2 — Classifying donor priority
+## Stage 2 — Donor priority
 
-For every **donor × country × sector** cell that meets the assessment
-thresholds, we evaluate three indicators:
+**Unit:** donor × country × sector.
 
-1. **Disbursement strength** — is this donor in the top of the disbursement
-   distribution *within this country-sector*?
-2. **Persistence** — has the donor been active (disbursed > 0) in a high share
-   of the analysis years?
-3. **Embeddedness** — does this country-sector represent a meaningful share of
-   the donor's total LAC portfolio?
+### Step 1 — Minimum activity rule
 
-Each indicator is a boolean (strong / not strong). The number of "strong"
-indicators — `n_strong` — determines the priority label:
+A cell is **assessed** only if both hold:
+- At least **1 active year** (disbursement > 0) in the recent 3-year window
+- `recent_avg > 0`
 
-| `n_strong` | Priority |
+Cells failing this rule are labeled **Peripheral / not assessed** and kept
+in the output (not dropped). They are excluded from within-country-sector
+percentile rankings.
+
+### Step 2 — Indicator flags (assessed cells only)
+
+| Flag | Condition | What it means |
+|---|---|---|
+| `disbursement_strong` | `recent_avg` ≥ P67 within country-sector (assessed donors only) **AND** ≥ P50 globally across all assessed rows | Top contributor in this space, above global median scale |
+| `persistence_strong` | `active_share` ≥ 0.50 **AND** `recent_active_years` ≥ 2 **AND** `cv_recent` < 1.0 | Long-run continuity, recent presence, and stable recent disbursements |
+| `embeddedness_strong` | `sector_share` ≥ 0.15 | This sector is ≥ 15% of the donor's country portfolio |
+
+`n_strong` = count of True flags (0, 1, 2, or 3).
+
+The **CV override**: if the coefficient of variation of recent disbursements
+(`cv_recent = std / mean` over 2022–2024) is ≥ 1.0, `persistence_strong` is
+forced to False — highly erratic recent disbursements are not rewarded as
+persistent engagement.
+
+The **global P50 floor** on disbursement prevents a top-ranked donor in a
+very small niche from qualifying on relative position alone.
+
+### Step 3 — Priority rules
+
+| Priority | Rule |
 |---|---|
-| 2 or 3 | **High** |
-| 1 | **Medium** |
-| 0 | **Low** |
-| (not assessed) | **Peripheral / not assessed** |
+| **High** | `n_strong` ≥ 2 **AND** (`disbursement_strong` OR `persistence_strong`) |
+| **Medium** | `n_strong` ≥ 1 (but not qualifying for High) |
+| **Low** | `n_strong` = 0 |
+| **Peripheral / not assessed** | Did not pass the minimum activity rule |
 
-A cell is **Peripheral** when it's too small or too short-lived to assess
-(e.g. a donor that disbursed once, years ago, in trivial amounts).
+The High rule requires that at least one of the two qualifying strong signals
+is scale or continuity — volume alone (embeddedness only) is not sufficient.
 
 ---
 
-## CAGR calculation
+## Combined interpretation
+
+The two stages compose into a practical matrix:
+
+| Context | High priority | Medium priority | Low priority |
+|---|---|---|---|
+| **Anchor** | Flagship partner | Supporting actor | Peripheral presence |
+| **Fragmented** | Coordination leader | Part of the crowd | Noise |
+| **Thin / emerging** | Dominant player | Occasional contributor | Passing presence |
+| **Low-activity** | Solo anchor | Sporadic engagement | Inactive |
+
+"High in an Anchor space" is the strongest partnership signal.
+"High in a Low-activity space" identifies a leading donor in a thin market —
+important for gap analysis.
+
+---
+
+## CAGR (Descriptive Analysis)
 
 Where we report sector growth, we use **Compound Annual Growth Rate** between
-**3-year endpoint averages** — e.g. the average of 2002–2004 vs. the average of
-2022–2024 — to smooth single-year volatility.
+**3-year endpoint averages** to smooth single-year volatility:
 
-Formula:
 $$\\text{CAGR} = \\left(\\frac{\\overline{Y_{end}}}{\\overline{Y_{start}}}\\right)^{1/n} - 1$$
 
-where $n$ is the number of years between the midpoints of the two windows.
+where $n$ = years between the midpoints of the two windows.
 
 ---
 
 ## Interpreting the dashboard
 
 Each page answers a specific question from the perspective of a development
-team scoping partners in their country × sector (phrased from the World Bank's
-point of view, but the same logic applies to any other organisation):
+team scoping partners in their country × sector:
 
 - **🗺️ Country–Sector Mapping** — *"What is the financing landscape in my
   country × sector, and how crowded is it?"*
@@ -1173,59 +1240,69 @@ point of view, but the same logic applies to any other organisation):
             """
 ## Glossary
 
-**Active share** — Share of years in the analysis window where a donor disbursed > 0 in a given country-sector. A persistence measure.
+**Active share** (`active_share`) — Count of years with disbursement > 0 in the full 23-year window ÷ 23. Ranges 0–1. A donor present in 18 of 23 years (78%) is fundamentally different from one present in 3 years (13%). Used in `persistence_strong`.
 
-**Anchor partnership space** — A country-sector with high total disbursement and a low number of active donors (concentrated partnerships). Established, well-funded space.
+**Active year** — A year in which the donor's annual disbursement in a given country-sector is strictly greater than zero.
 
-**CAGR (Compound Annual Growth Rate)** — Annualised growth rate between two points in time. We compute it between 3-year endpoint averages to reduce single-year noise.
+**Anchor partnership space** — A country-sector classified as having high total disbursement (≥ P67) and a lower number of active donors (< P67). Established, concentrated, well-funded space.
 
-**Context (Stage 1 label)** — The classification of a country-sector into one of four categories: Anchor, Fragmented coordination, Thin/emerging, or Low-activity.
+**CAGR (Compound Annual Growth Rate)** — Annualised growth rate between two points in time. Computed between 3-year endpoint averages to reduce single-year noise.
 
-**CRS (Creditor Reporting System)** — OECD's activity-level database of aid flows. Source of sector breakdowns.
+**Context (Stage 1 label)** — The classification of a country-sector into one of four categories: Anchor, Fragmented coordination, Thin/emerging, or Low-activity. Reflects the financing landscape the World Bank team is operating in.
 
-**DAC (Development Assistance Committee)** — The OECD committee whose members are the traditional bilateral donors.
+**CRS (Creditor Reporting System)** — OECD's activity-level database of aid flows. Source of sector breakdowns used in this framework.
 
-**DAC2A** — OECD's aggregated table of Gross ODA by donor and recipient. Source of authoritative volume totals.
+**`cv_recent`** — Coefficient of variation of annual disbursements over the recent 3-year window (`std_recent / recent_avg`). Computed for assessed rows only. If ≥ 1.0, `persistence_strong` is forced to False, preventing highly erratic donors from being labelled as persistent partners.
 
-**Disbursement strength** — One of the three Stage 2 indicators. True if the donor is in the top tier of disbursement for this country-sector.
+**DAC (Development Assistance Committee)** — The OECD committee whose members are the traditional bilateral donors (e.g. USA, Germany, Japan).
 
-**Donor type** — Classification of donors into categories: Bilateral (DAC), Bilateral (Non-DAC), MDB (multilateral development bank), UN Agency, Vertical Fund (climate/health-specific funds), Other.
+**DAC2A** — OECD's aggregated table of Gross ODA by donor and recipient. Source of authoritative volume totals used in this framework.
 
-**Embeddedness** — One of the three Stage 2 indicators. True if this country-sector represents a meaningful share of the donor's total portfolio.
+**Disbursement strength** (`disbursement_strong`) — True if the donor's `recent_avg` ranks at or above P67 *within* its country-sector (among assessed donors only) **and** at or above P50 globally across all assessed rows. The global P50 floor prevents a top-ranked donor in a very small niche from qualifying on relative position alone.
 
-**Fragmented coordination space** — A country-sector with many active donors and moderate-to-high total disbursement. Suggests crowded, dispersed engagement where coordination is the key challenge.
+**Donor count** (`cs_donor_count`) — Number of distinct donors with at least one active year in the recent 3-year window (2022–2024). Used in Stage 1 to characterise coordination complexity.
 
-**Gap** — Used informally for Low-activity spaces and for country-sectors where external financing presence is thin.
+**Donor type** — Bilateral (DAC), Bilateral (Non-DAC), MDB, UN Agency, Vertical Fund, Other.
 
-**High priority** — A donor-country-sector partnership where the donor is strong on ≥2 of the 3 Stage 2 indicators.
+**Embeddedness** (`embeddedness_strong`) — True if `sector_share ≥ 0.15` (this sector is at least 15% of the donor's country portfolio). Captures operational focus rather than token presence.
+
+**Fragmented coordination space** — A country-sector with moderate-to-high total disbursement (≥ P33) and many active donors (≥ P67). Many players, coordination is the key challenge.
+
+**Gap** — Informal term for Low-activity spaces where external financing presence is limited.
+
+**High priority** — `n_strong ≥ 2` AND (`disbursement_strong` OR `persistence_strong`). At least two strong signals, including scale or continuity.
 
 **LAC** — Latin America & the Caribbean.
 
-**Low-activity space** — A country-sector with low total disbursement, regardless of donor count. Potential financing gap or structural barrier.
+**Low-activity space** — A country-sector with total disbursement below P33, regardless of donor count. Potential financing gap or structural barrier to engagement.
 
 **MDB** — Multilateral Development Bank (e.g. IDB, CAF, World Bank).
 
-**`n_strong`** — The number of Stage 2 indicators (0–3) on which a donor is "strong". Determines the priority label.
+**`n_strong`** — Count of True flags among the three Stage 2 indicators (0–3). Determines the priority label.
 
-**ODA (Official Development Assistance)** — Concessional government finance to developing countries, as defined by the OECD DAC.
+**ODA (Official Development Assistance)** — Concessional government finance to developing countries, as defined by the OECD DAC. Negative values are valid OECD corrections and are retained throughout.
 
-**Peripheral / not assessed** — A donor-country-sector cell that failed the Stage 2 assessment thresholds (too small or too short-lived). Not ranked.
+**Peripheral / not assessed** — A donor-country-sector cell that did not meet the minimum activity rule (< 1 active year in recent window or `recent_avg` ≤ 0). Kept in the output with flags set to False; excluded from within-country-sector rankings.
 
-**Persistence** — One of the three Stage 2 indicators. True if the donor has been active in a high share of the analysis years.
+**Persistence** (`persistence_strong`) — True if ALL three conditions hold: `active_share ≥ 0.50` (present at least half the 23-year window), `recent_active_years ≥ 2` (at least 2 active years in 2022–2024), and `cv_recent < 1.0` (no highly erratic recent disbursements).
 
-**Priority (Stage 2 label)** — The classification of a donor-country-sector partnership into High / Medium / Low / Peripheral.
+**Priority (Stage 2 label)** — High / Medium / Low / Peripheral. Classifies the strategic centrality of a donor in a specific country-sector.
 
-**Recent avg** — Average annual disbursement over the last 3 years of the analysis window (2022–2024), in USD millions.
+**Recent avg** (`recent_avg`) — Mean annual disbursement over 2022–2024 (recent 3-year window), in USD millions. Negative values retained as valid OECD corrections.
 
-**Sector share** — A donor's share of total disbursement in a given country-sector. A volume-relative measure.
+**Recent active years** (`recent_active_years`) — Count of years with disbursement > 0 in the recent 3-year window only. Used in the minimum activity rule and in `persistence_strong`.
 
-**Stage 1** — The country-sector context classification.
+**Sector share** (`sector_share`) — Donor's total disbursement in (country, sector) ÷ donor's total disbursement in that country across all sectors (full analysis window). Ranges 0–1.
 
-**Stage 2** — The donor-country-sector priority classification.
+**Stage 1** — Country-sector context classification. Characterises the financing landscape of each country × sector space.
 
-**Thin / emerging space** — A country-sector with high disbursement but few donors. Concentrated financing, often a strategic entry point.
+**Stage 2** — Donor-country-sector priority classification. Evaluates each donor's position within each space.
 
-**Vertical Fund** — A multilateral fund with a specific thematic focus (e.g. Global Fund, GAVI, Green Climate Fund).
+**`std_recent`** — Standard deviation of annual disbursements over the recent 3-year window. Used to compute `cv_recent`.
+
+**Thin / emerging space** — A country-sector with mid-range disbursement (P33–P67) and few active donors (< P67). Some financing, concentrated among few players — potential strategic entry point.
+
+**Vertical Fund** — A multilateral fund with a specific thematic focus (e.g. Green Climate Fund, Global Fund, GAVI).
             """
         )
 
@@ -1237,73 +1314,102 @@ point of view, but the same logic applies to any other organisation):
             """
 ## Technical details
 
-For readers who want to understand the precise thresholds and formulas.
+Precise thresholds and rules for technically curious readers.
 
-### Percentile cutoffs
+### Fixed assumptions
 
-- **Disbursement percentile** (`disburse_pctile`) — rank of `cs_recent_avg`
-  across all LAC country-sectors.
-- **Donor count percentile** (`donor_count_pctile`) — rank of `cs_donor_count`
-  across all LAC country-sectors.
-- **Cutoffs:** P33 (low threshold) and P67 (high threshold).
+1. Analysis window: 2002–2024 (23 years).
+2. Recent window: 2022–2024 (last 3 years), configurable in `settings.yaml`.
+3. Negative disbursements: retained everywhere as valid OECD corrections.
+4. No rows are dropped: donors failing the minimum activity rule are labeled
+   Peripheral / not assessed, not removed.
 
-### Stage 1 decision rule
+### Stage 1 — Percentile thresholds
 
-Sequential — first match wins:
+- `disburse_pctile` = percentile rank of `cs_recent_avg` across all 573
+  country-sector cells.
+- `donor_count_pctile` = percentile rank of `cs_donor_count` across all cells.
+- Cutoffs: **P33** (low) and **P67** (high), configurable in `settings.yaml`.
+
+### Stage 1 — Classification rules (sequential, first match wins)
 
 ```
 if disburse_pctile < P33:
-    → "Low-activity space"          # low disbursement, regardless of donor count
-elif disburse_pctile ≥ P33 and donor_count_pctile ≥ P67:
+    → "Low-activity space"
+
+elif disburse_pctile >= P33 and donor_count_pctile >= P67:
     → "Fragmented coordination space"
-elif disburse_pctile ≥ P67:
-    → "Anchor partnership space"    # high disburse, low donor count (by exclusion)
+
+elif disburse_pctile >= P67:
+    → "Anchor partnership space"   # high disburse, low donor count by exclusion
+
 else:
-    → "Thin / emerging space"       # P33 ≤ disburse < P67, donor count < P67
+    → "Thin / emerging space"      # P33 <= disburse < P67, donor_count < P67
 ```
 
-### Stage 2 indicator definitions
+### Stage 2 — Minimum activity rule
 
-- **`disbursement_strong`** — True if the donor ranks in the top percentile
-  tier of `recent_avg` *within* its country-sector.
-- **`persistence_strong`** — True if `active_share ≥ high threshold`
-  (e.g. donor active in most years of the window).
-- **`embeddedness_strong`** — True if `sector_share ≥ high threshold`
-  (donor's own portfolio concentrated here).
+A cell is **assessed** if and only if:
+- `recent_active_years >= 1` (at least 1 active year in 2022–2024), **and**
+- `recent_avg > 0`
 
-### Stage 2 priority assignment
+All other cells receive **Peripheral / not assessed** (flags = False,
+`n_strong` = 0) and are excluded from within-CS percentile rankings.
 
-```
+### Stage 2 — Indicator flags
+
+```python
+# Disbursement strength
+#   within-CS P67 among assessed donors only
+#   AND above global P50 across all assessed rows (disburse_floor_pctile)
+disbursement_strong = (
+    disburse_pctile_within_cs >= P67_within_cs
+    AND recent_avg >= global_P50_assessed
+)
+
+# Persistence strength
+#   Long-run continuity + recent presence + stable recent disbursements
+persistence_strong = (
+    active_share >= 0.50
+    AND recent_active_years >= 2
+    AND cv_recent < 1.0          # cv_recent = std_recent / recent_avg
+)
+
+# Embeddedness strength
+embeddedness_strong = sector_share >= 0.15
+
 n_strong = disbursement_strong + persistence_strong + embeddedness_strong
-
-if n_strong ≥ 2:    priority = "High"
-elif n_strong == 1: priority = "Medium"
-elif n_strong == 0: priority = "Low"
-else:               priority = "Peripheral / not assessed"
 ```
 
-### Assessment eligibility
+### Stage 2 — Priority rules
 
-A donor-country-sector cell is **assessed** (receives High/Medium/Low) only if:
-- `recent_avg > 0`, **and**
-- `active_years ≥ 2`, **and**
-- a minimum total disbursement threshold is met.
+```python
+if n_strong >= 2 and (disbursement_strong or persistence_strong):
+    priority = "High"
+elif n_strong >= 1:
+    priority = "Medium"
+elif n_strong == 0:
+    priority = "Low"
+# (Peripheral already assigned above)
+```
 
-Cells below these thresholds are tagged **Peripheral / not assessed**.
+The High rule requires that at least one of the two qualifying signals is
+scale or continuity — embeddedness alone cannot produce a High.
+
+### Output tables
+
+Two canonical CSV outputs (also saved as `.parquet`):
+
+| Table | Rows | Key columns |
+|---|---|---|
+| `country_sector_context_table.csv` | 573 (35 countries × 17 sectors) | `cs_context`, `cs_recent_avg`, `cs_donor_count`, `disburse_pctile`, `donor_count_pctile` |
+| `donor_country_sector_priority_table.csv` | 8,762 (83 donors × 35 countries × 17 sectors) | `priority`, `n_strong`, `disbursement_strong`, `persistence_strong`, `embeddedness_strong`, `cv_recent`, `cs_context` |
 
 ### Configuration
 
-All thresholds are defined in `priority_engine/config/settings.yaml` and can
-be adjusted without touching dashboard code. The analytical pipeline lives in
-`priority_engine/src/` and produces the CSV outputs that this dashboard reads.
-
-### Source code
-
-- `src/classify.py` — Stage 1 and Stage 2 classification logic
-- `src/panels.py` — panel construction (donor × country × sector × year)
-- `src/visuals.py` — static figure generation (for reports)
-- `dashboard.py` — this Streamlit app (display only; no calculations here)
-
-See `methodology.md` in the repository root for the fully documented spec.
+All thresholds (P33, P67, P50 global floor, 0.50, 0.15, 2 years, CV 1.0)
+are configurable in `config/settings.yaml`. The pipeline (`main.py`) regenerates
+both output tables from raw OECD data with a single command. This dashboard
+reads the pre-generated CSVs from `data/` — no calculations run here.
             """
         )
