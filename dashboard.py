@@ -905,63 +905,74 @@ See the **📚 Methodology** page for precise thresholds.
     if len(high):
         raw = high.head(top_n).copy()
 
-        # ── Build display dataframe with raw numeric values ───────────────────
-        # Progress bars and checkboxes need actual numbers / booleans — no strings.
+        # Ensure new indicator columns exist even on older CSVs
+        for col in ["disburse_pctile_within_cs", "persistence_active_years", "cv_recent"]:
+            if col not in raw.columns:
+                raw[col] = np.nan
+
+        # ── Build display dataframe — keep numeric for column_config ──────────
         show = pd.DataFrame()
         show["Donor"]        = raw["donor_name"]
         show["Country"]      = raw["country_name"]
         show["Sector"]       = raw["sector"]
         show["recent_avg"]   = raw["recent_avg"].round(1)
         show["disburse_pct"] = raw["disburse_pctile_within_cs"].round(1)
-        if "persistence_active_years" in raw.columns:
-            show["yrs_active"] = raw["persistence_active_years"].astype(int)
-        if "cv_recent" in raw.columns:
-            show["cv"] = raw["cv_recent"].round(2)
+        show["yrs_active"]   = pd.to_numeric(raw["persistence_active_years"], errors="coerce")
+        show["cv"]           = raw["cv_recent"].round(2)
         show["sector_pct"]   = (raw["sector_share"] * 100).round(1)
         show["💰 Scale"]     = raw["disbursement_strong"].astype(bool)
         show["🔄 Persist"]   = raw["persistence_strong"].astype(bool)
         show["🎯 Embed"]     = raw["embeddedness_strong"].astype(bool)
         show["Context"]      = raw["cs_context"]
 
-        # ── Column config: progress bars + checkboxes ─────────────────────────
+        COL_ORDER = [
+            "Donor", "Country", "Sector",
+            "recent_avg", "disburse_pct", "yrs_active", "cv", "sector_pct",
+            "💰 Scale", "🔄 Persist", "🎯 Embed",
+            "Context",
+        ]
+
         col_cfg = {
+            "Donor":   st.column_config.TextColumn("Donor",   width="medium"),
+            "Country": st.column_config.TextColumn("Country", width="small"),
+            "Sector":  st.column_config.TextColumn("Sector",  width="medium"),
             "recent_avg": st.column_config.NumberColumn(
-                "Recent Avg ($M)", format="$%.1f",
-                help="Mean annual disbursement over the last 3 years (2022–2024)."),
+                "Recent Avg ($M)", format="$%.1f", width="small",
+                help="Mean annual disbursement over 2022–2024."),
             "disburse_pct": st.column_config.ProgressColumn(
-                "💰 Disburse rank", min_value=0, max_value=100, format="%.0f%%",
-                help="Disbursement percentile within this country-sector (assessed donors). ≥ P67 needed."),
+                "💰 Rank", min_value=0, max_value=100, format="%.0f%%", width="small",
+                help="Disbursement percentile within country-sector (assessed donors). ≥ P67 = strong."),
+            "yrs_active": st.column_config.ProgressColumn(
+                "🔄 5yr", min_value=0, max_value=5, format="%d/5", width="small",
+                help="Active years in 2020–2024. ≥ 4 = persistence condition met."),
+            "cv": st.column_config.NumberColumn(
+                "🔄 CV", format="%.2f", width="small",
+                help="CV of disbursements 2022–2024. < 1.0 = stable (persistence condition). NaN = peripheral."),
             "sector_pct": st.column_config.ProgressColumn(
-                "🎯 Sector %", min_value=0, max_value=100, format="%.1f%%",
-                help="Share of donor's total country portfolio allocated to this sector. ≥ 15% needed."),
-            "💰 Scale":  st.column_config.CheckboxColumn(
-                "💰 Scale", help="Top third within country-sector AND above global P50"),
-            "🔄 Persist": st.column_config.CheckboxColumn(
-                "🔄 Persist", help="Active ≥ 4 of last 5 years AND CV < 1.0"),
-            "🎯 Embed":  st.column_config.CheckboxColumn(
-                "🎯 Embed", help="Sector ≥ 15% of donor's country portfolio"),
+                "🎯 Sect%", min_value=0, max_value=100, format="%.0f%%", width="small",
+                help="Share of donor's country portfolio in this sector. ≥ 15% = embeddedness strong."),
+            "💰 Scale":   st.column_config.CheckboxColumn("💰", width="small",
+                help="Scale strong: P67 within CS + above global P50"),
+            "🔄 Persist": st.column_config.CheckboxColumn("🔄", width="small",
+                help="Persist strong: ≥ 4/5 active years + CV < 1.0"),
+            "🎯 Embed":   st.column_config.CheckboxColumn("🎯", width="small",
+                help="Embed strong: sector ≥ 15% of country portfolio"),
+            "Context": st.column_config.TextColumn("Context", width="medium"),
         }
-        if "yrs_active" in show.columns:
-            col_cfg["yrs_active"] = st.column_config.ProgressColumn(
-                "🔄 5yr active", min_value=0, max_value=5, format="%d / 5",
-                help="Active years in the last 5 (2020–2024). ≥ 4 needed for persistence.")
-        if "cv" in show.columns:
-            col_cfg["cv"] = st.column_config.NumberColumn(
-                "🔄 CV", format="%.2f",
-                help="Coefficient of variation of disbursements over the last 3 years. < 1.0 needed for persistence.")
 
         st.dataframe(
             show.reset_index(drop=True),
             column_config=col_cfg,
+            column_order=COL_ORDER,
             use_container_width=True,
             height=500,
         )
         st.caption(
-            "Progress bars: **💰 Disburse rank** = within country-sector percentile (full bar = P100).  "
-            "**🔄 5yr active** = years active out of 5 (full bar = 5/5).  "
-            "**🎯 Sector %** = portfolio share (full bar = 100%).  "
-            "**🔄 CV** = volatility of recent disbursements (lower is more stable; threshold < 1.0).  "
-            "Checkboxes show whether each indicator clears its threshold."
+            "**💰 Rank** = disbursement percentile within CS (full bar = P100, threshold ≥ P67).  "
+            "**🔄 5yr** = active years out of last 5 (threshold ≥ 4).  "
+            "**🔄 CV** = coefficient of variation of recent disbursements (threshold < 1.0, lower = more stable).  "
+            "**🎯 Sect%** = sector's share of donor country portfolio (threshold ≥ 15%).  "
+            "**💰 🔄 🎯** checkboxes = indicator clears its threshold."
         )
 
     st.divider()
@@ -1121,59 +1132,70 @@ elif page == "📋 Priority Table":
     sort_col = sort_options[sort_label]
     display = dcs.sort_values(sort_col, ascending=sort_asc).reset_index(drop=True)
 
+    # Ensure new indicator columns exist even on older CSVs
+    for col in ["disburse_pctile_within_cs", "persistence_active_years", "cv_recent"]:
+        if col not in display.columns:
+            display[col] = np.nan
+
     # ── Build display dataframe — keep numeric for column_config ──────────────
     show = pd.DataFrame()
-    show["Donor"]    = display["donor_name"]
-    show["Type"]     = display["donor_type"]
-    show["Country"]  = display["country_name"]
-    show["Sector"]   = display["sector"]
-    show["recent_avg"] = display["recent_avg"].round(1)
+    show["Donor"]        = display["donor_name"]
+    show["Type"]         = display["donor_type"]
+    show["Country"]      = display["country_name"]
+    show["Sector"]       = display["sector"]
+    show["recent_avg"]   = display["recent_avg"].round(1)
+    show["disburse_pct"] = display["disburse_pctile_within_cs"].round(1)
+    show["yrs_active"]   = pd.to_numeric(display["persistence_active_years"], errors="coerce")
+    show["cv"]           = display["cv_recent"].round(2)
+    show["sector_pct"]   = (display["sector_share"] * 100).round(1)
+    show["💰 Scale"]     = display["disbursement_strong"].astype(bool)
+    show["🔄 Persist"]   = display["persistence_strong"].astype(bool)
+    show["🎯 Embed"]     = display["embeddedness_strong"].astype(bool)
+    show["Priority"]     = display["priority"]
+    show["Context"]      = display["cs_context"]
 
-    if "disburse_pctile_within_cs" in display.columns:
-        show["disburse_pct"] = display["disburse_pctile_within_cs"].round(1)
-    if "persistence_active_years" in display.columns:
-        show["yrs_active"] = display["persistence_active_years"].astype("Int64")
-    if "cv_recent" in display.columns:
-        show["cv"] = display["cv_recent"].round(2)
+    COL_ORDER = [
+        "Donor", "Type", "Country", "Sector",
+        "recent_avg", "disburse_pct", "yrs_active", "cv", "sector_pct",
+        "💰 Scale", "🔄 Persist", "🎯 Embed",
+        "Priority", "Context",
+    ]
 
-    show["sector_pct"] = (display["sector_share"] * 100).round(1)
-    show["💰 Scale"]   = display["disbursement_strong"].astype(bool)
-    show["🔄 Persist"] = display["persistence_strong"].astype(bool)
-    show["🎯 Embed"]   = display["embeddedness_strong"].astype(bool)
-    show["Priority"]   = display["priority"]
-    show["Context"]    = display["cs_context"]
-
-    # ── Column config ─────────────────────────────────────────────────────────
+    # ── Column config — compact widths so all columns fit on screen ───────────
     col_cfg = {
+        "Donor":   st.column_config.TextColumn("Donor",   width="medium"),
+        "Type":    st.column_config.TextColumn("Type",    width="small"),
+        "Country": st.column_config.TextColumn("Country", width="small"),
+        "Sector":  st.column_config.TextColumn("Sector",  width="medium"),
         "recent_avg": st.column_config.NumberColumn(
-            "Recent Avg ($M)", format="$%.1f",
+            "Recent Avg ($M)", format="$%.1f", width="small",
             help="Mean annual disbursement over 2022–2024."),
+        "disburse_pct": st.column_config.ProgressColumn(
+            "💰 Rank", min_value=0, max_value=100, format="%.0f%%", width="small",
+            help="Disbursement percentile within CS (assessed donors). ≥ P67 = scale strong."),
+        "yrs_active": st.column_config.ProgressColumn(
+            "🔄 5yr", min_value=0, max_value=5, format="%d/5", width="small",
+            help="Active years in 2020–2024. ≥ 4 = persistence condition met."),
+        "cv": st.column_config.NumberColumn(
+            "🔄 CV", format="%.2f", width="small",
+            help="CV of disbursements 2022–2024. < 1.0 = stable. NaN = peripheral."),
         "sector_pct": st.column_config.ProgressColumn(
-            "🎯 Sector %", min_value=0, max_value=100, format="%.1f%%",
-            help="Share of donor's total country portfolio in this sector. ≥ 15% = embeddedness strong."),
-        "💰 Scale":  st.column_config.CheckboxColumn(
-            "💰 Scale", help="Top third within country-sector AND above global P50"),
-        "🔄 Persist": st.column_config.CheckboxColumn(
-            "🔄 Persist", help="Active ≥ 4 of last 5 years AND CV < 1.0"),
-        "🎯 Embed":  st.column_config.CheckboxColumn(
-            "🎯 Embed", help="Sector ≥ 15% of donor's country portfolio"),
+            "🎯 Sect%", min_value=0, max_value=100, format="%.0f%%", width="small",
+            help="Share of donor's country portfolio in this sector. ≥ 15% = embeddedness strong."),
+        "💰 Scale":   st.column_config.CheckboxColumn("💰", width="small",
+            help="Scale strong: top third within CS + above global P50"),
+        "🔄 Persist": st.column_config.CheckboxColumn("🔄", width="small",
+            help="Persist strong: ≥ 4/5 active years + CV < 1.0"),
+        "🎯 Embed":   st.column_config.CheckboxColumn("🎯", width="small",
+            help="Embed strong: sector ≥ 15% of country portfolio"),
+        "Priority": st.column_config.TextColumn("Priority", width="small"),
+        "Context":  st.column_config.TextColumn("Context",  width="medium"),
     }
-    if "disburse_pct" in show.columns:
-        col_cfg["disburse_pct"] = st.column_config.ProgressColumn(
-            "💰 Disburse rank", min_value=0, max_value=100, format="%.0f%%",
-            help="Disbursement percentile within this country-sector (assessed donors). ≥ P67 needed.")
-    if "yrs_active" in show.columns:
-        col_cfg["yrs_active"] = st.column_config.ProgressColumn(
-            "🔄 5yr active", min_value=0, max_value=5, format="%d / 5",
-            help="Active years in 2020–2024. ≥ 4 needed for persistence.")
-    if "cv" in show.columns:
-        col_cfg["cv"] = st.column_config.NumberColumn(
-            "🔄 CV", format="%.2f",
-            help="CV of disbursements over 2022–2024. < 1.0 needed for persistence. NaN = peripheral.")
 
     st.dataframe(
         show.reset_index(drop=True),
         column_config=col_cfg,
+        column_order=COL_ORDER,
         use_container_width=True,
         height=650,
     )
