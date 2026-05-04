@@ -806,19 +806,6 @@ See the **📚 Methodology** page for precise thresholds.
     c3.metric("Medium priority", f"{(assessed['priority']=='Medium').sum():,}", help=HELP["priority"])
     c4.metric("Low priority", f"{(assessed['priority']=='Low').sum():,}", help=HELP["priority"])
 
-    # ── Indicator flag rates ───────────────────────────────────────────────────
-    n = len(assessed)
-    d_pct = assessed["disbursement_strong"].sum() / n * 100
-    p_pct = assessed["persistence_strong"].sum()  / n * 100
-    e_pct = assessed["embeddedness_strong"].sum()  / n * 100
-    c5, c6, c7 = st.columns(3)
-    c5.metric("💰 Disbursement strong", f"{d_pct:.0f}% of assessed",
-              help="Donors ranking in the top third within their country-sector AND above global P50.")
-    c6.metric("🔄 Persistence strong", f"{p_pct:.0f}% of assessed",
-              help="Donors active in ≥ 4 of the last 5 years with CV < 1.0.")
-    c7.metric("🎯 Embeddedness strong", f"{e_pct:.0f}% of assessed",
-              help="Donors allocating ≥ 15% of their country portfolio to this sector.")
-
     st.divider()
 
     # ── Priority by sector / country ──────────────────────────────────────────
@@ -918,39 +905,63 @@ See the **📚 Methodology** page for precise thresholds.
     if len(high):
         raw = high.head(top_n).copy()
 
-        # ── Build "Strong on" summary column from flag values ─────────────────
-        def strong_summary(row):
-            parts = []
-            if row.get("disbursement_strong", False): parts.append("💰 Scale")
-            if row.get("persistence_strong",  False): parts.append("🔄 Persist")
-            if row.get("embeddedness_strong",  False): parts.append("🎯 Embed")
-            return "  ".join(parts) if parts else "—"
-        raw["Strong on"] = raw.apply(strong_summary, axis=1)
-
-        # ── Select and format display columns ─────────────────────────────────
+        # ── Build display dataframe with raw numeric values ───────────────────
+        # Progress bars and checkboxes need actual numbers / booleans — no strings.
         show = pd.DataFrame()
-        show["Donor"]         = raw["donor_name"]
-        show["Country"]       = raw["country_name"]
-        show["Sector"]        = raw["sector"]
-        show["Recent Avg"]    = raw["recent_avg"].apply(lambda v: f"${v:,.1f}M")
-        show["Disburse rank"] = raw["disburse_pctile_within_cs"].round(0).astype(int).astype(str) + "%"
-
+        show["Donor"]        = raw["donor_name"]
+        show["Country"]      = raw["country_name"]
+        show["Sector"]       = raw["sector"]
+        show["recent_avg"]   = raw["recent_avg"].round(1)
+        show["disburse_pct"] = raw["disburse_pctile_within_cs"].round(1)
         if "persistence_active_years" in raw.columns:
-            show["5yr active"] = raw["persistence_active_years"].astype(int).astype(str) + " / 5"
+            show["yrs_active"] = raw["persistence_active_years"].astype(int)
         if "cv_recent" in raw.columns:
-            show["CV (recent)"] = raw["cv_recent"].round(2)
+            show["cv"] = raw["cv_recent"].round(2)
+        show["sector_pct"]   = (raw["sector_share"] * 100).round(1)
+        show["💰 Scale"]     = raw["disbursement_strong"].astype(bool)
+        show["🔄 Persist"]   = raw["persistence_strong"].astype(bool)
+        show["🎯 Embed"]     = raw["embeddedness_strong"].astype(bool)
+        show["Context"]      = raw["cs_context"]
 
-        show["Sector %"]  = (raw["sector_share"] * 100).round(1).astype(str) + "%"
-        show["Strong on"] = raw["Strong on"]
-        show["Context"]   = raw["cs_context"]
+        # ── Column config: progress bars + checkboxes ─────────────────────────
+        col_cfg = {
+            "recent_avg": st.column_config.NumberColumn(
+                "Recent Avg ($M)", format="$%.1f",
+                help="Mean annual disbursement over the last 3 years (2022–2024)."),
+            "disburse_pct": st.column_config.ProgressColumn(
+                "💰 Disburse rank", min_value=0, max_value=100, format="%.0f%%",
+                help="Disbursement percentile within this country-sector (assessed donors). ≥ P67 needed."),
+            "sector_pct": st.column_config.ProgressColumn(
+                "🎯 Sector %", min_value=0, max_value=100, format="%.1f%%",
+                help="Share of donor's total country portfolio allocated to this sector. ≥ 15% needed."),
+            "💰 Scale":  st.column_config.CheckboxColumn(
+                "💰 Scale", help="Top third within country-sector AND above global P50"),
+            "🔄 Persist": st.column_config.CheckboxColumn(
+                "🔄 Persist", help="Active ≥ 4 of last 5 years AND CV < 1.0"),
+            "🎯 Embed":  st.column_config.CheckboxColumn(
+                "🎯 Embed", help="Sector ≥ 15% of donor's country portfolio"),
+        }
+        if "yrs_active" in show.columns:
+            col_cfg["yrs_active"] = st.column_config.ProgressColumn(
+                "🔄 5yr active", min_value=0, max_value=5, format="%d / 5",
+                help="Active years in the last 5 (2020–2024). ≥ 4 needed for persistence.")
+        if "cv" in show.columns:
+            col_cfg["cv"] = st.column_config.NumberColumn(
+                "🔄 CV", format="%.2f",
+                help="Coefficient of variation of disbursements over the last 3 years. < 1.0 needed for persistence.")
 
-        st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500)
+        st.dataframe(
+            show.reset_index(drop=True),
+            column_config=col_cfg,
+            use_container_width=True,
+            height=500,
+        )
         st.caption(
-            "**Disburse rank** = disbursement percentile within the same country-sector (among assessed donors). "
-            "**5yr active** = active years in the last 5 (2020–2024); needs ≥ 4 for persistence. "
-            "**CV (recent)** = coefficient of variation of annual disbursements over the last 3 years; needs < 1.0 for persistence. "
-            "**Sector %** = share of donor's country portfolio in this sector (needs ≥ 15% for embeddedness). "
-            "**Strong on** = which of the three indicators this donor meets the threshold for."
+            "Progress bars: **💰 Disburse rank** = within country-sector percentile (full bar = P100).  "
+            "**🔄 5yr active** = years active out of 5 (full bar = 5/5).  "
+            "**🎯 Sector %** = portfolio share (full bar = 100%).  "
+            "**🔄 CV** = volatility of recent disbursements (lower is more stable; threshold < 1.0).  "
+            "Checkboxes show whether each indicator clears its threshold."
         )
 
     st.divider()
