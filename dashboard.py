@@ -923,13 +923,11 @@ See the **📚 Methodology** page for precise thresholds.
         show["💰 Scale"]     = raw["disbursement_strong"].astype(bool)
         show["🔄 Persist"]   = raw["persistence_strong"].astype(bool)
         show["🎯 Embed"]     = raw["embeddedness_strong"].astype(bool)
-        show["Context"]      = raw["cs_context"]
 
         COL_ORDER = [
             "Donor", "Country", "Sector",
             "recent_avg", "disburse_pct", "yrs_active", "cv", "sector_pct",
             "💰 Scale", "🔄 Persist", "🎯 Embed",
-            "Context",
         ]
 
         col_cfg = {
@@ -957,7 +955,6 @@ See the **📚 Methodology** page for precise thresholds.
                 help="Persist strong: ≥ 4/5 active years + CV < 1.0"),
             "🎯 Embed":   st.column_config.CheckboxColumn("🎯", width="small",
                 help="Embed strong: sector ≥ 15% of country portfolio"),
-            "Context": st.column_config.TextColumn("Context", width="medium"),
         }
 
         st.dataframe(
@@ -968,11 +965,11 @@ See the **📚 Methodology** page for precise thresholds.
             height=500,
         )
         st.caption(
-            "**💰 Rank** = disbursement percentile within CS (full bar = P100, threshold ≥ P67).  "
-            "**🔄 5yr** = active years out of last 5 (threshold ≥ 4).  "
-            "**🔄 CV** = coefficient of variation of recent disbursements (threshold < 1.0, lower = more stable).  "
-            "**🎯 Sect%** = sector's share of donor country portfolio (threshold ≥ 15%).  "
-            "**💰 🔄 🎯** checkboxes = indicator clears its threshold."
+            "**💰 Rank** = disbursement percentile within CS (full bar = P100, ≥ P67 = strong).  "
+            "**🔄 5yr** = active years in last 5 (full bar = 5/5, ≥ 4 = strong).  "
+            "**🔄 CV** = volatility of recent disbursements (< 1.0 = stable = strong).  "
+            "**🎯 Sect%** = sector share of country portfolio (≥ 15% = strong).  "
+            "Checkboxes show whether each indicator clears its threshold."
         )
 
     st.divider()
@@ -1140,7 +1137,6 @@ elif page == "📋 Priority Table":
     # ── Build display dataframe — keep numeric for column_config ──────────────
     show = pd.DataFrame()
     show["Donor"]        = display["donor_name"]
-    show["Type"]         = display["donor_type"]
     show["Country"]      = display["country_name"]
     show["Sector"]       = display["sector"]
     show["recent_avg"]   = display["recent_avg"].round(1)
@@ -1152,19 +1148,17 @@ elif page == "📋 Priority Table":
     show["🔄 Persist"]   = display["persistence_strong"].astype(bool)
     show["🎯 Embed"]     = display["embeddedness_strong"].astype(bool)
     show["Priority"]     = display["priority"]
-    show["Context"]      = display["cs_context"]
 
     COL_ORDER = [
-        "Donor", "Type", "Country", "Sector",
+        "Donor", "Country", "Sector",
         "recent_avg", "disburse_pct", "yrs_active", "cv", "sector_pct",
         "💰 Scale", "🔄 Persist", "🎯 Embed",
-        "Priority", "Context",
+        "Priority",
     ]
 
     # ── Column config — compact widths so all columns fit on screen ───────────
     col_cfg = {
         "Donor":   st.column_config.TextColumn("Donor",   width="medium"),
-        "Type":    st.column_config.TextColumn("Type",    width="small"),
         "Country": st.column_config.TextColumn("Country", width="small"),
         "Sector":  st.column_config.TextColumn("Sector",  width="medium"),
         "recent_avg": st.column_config.NumberColumn(
@@ -1189,7 +1183,6 @@ elif page == "📋 Priority Table":
         "🎯 Embed":   st.column_config.CheckboxColumn("🎯", width="small",
             help="Embed strong: sector ≥ 15% of country portfolio"),
         "Priority": st.column_config.TextColumn("Priority", width="small"),
-        "Context":  st.column_config.TextColumn("Context",  width="medium"),
     }
 
     st.dataframe(
@@ -1204,13 +1197,12 @@ elif page == "📋 Priority Table":
         st.markdown(
             """
 - **Recent Avg ($M)** — mean annual disbursement over the last 3 years (2022–2024).
-- **💰 Disburse rank** — disbursement percentile within the same country-sector, among assessed donors only. Progress bar = relative position (P100 = top donor). Threshold: ≥ P67.
-- **🔄 5yr active** — number of years with positive disbursement in 2020–2024. Progress bar out of 5. Threshold: ≥ 4.
-- **🔄 CV** — coefficient of variation of annual disbursements over 2022–2024. Lower = more stable. Threshold: < 1.0. NaN = peripheral (not assessed).
-- **🎯 Sector %** — share of donor's total country portfolio allocated to this sector. Progress bar out of 100%. Threshold: ≥ 15%.
-- **💰 Scale / 🔄 Persist / 🎯 Embed** — checkbox: did the donor clear the threshold on that indicator?
-- **Priority** — High (≥ 2 strong, incl. scale or persistence) · Medium (1 strong) · Low (0 strong) · Peripheral (not assessed).
-- **Context** — Stage 1 country-sector classification.
+- **💰 Rank** — disbursement percentile within the same country-sector (assessed donors only). Full bar = P100 (top donor). Threshold: ≥ P67.
+- **🔄 5yr** — years with positive disbursement in 2020–2024. Full bar = 5/5. Threshold: ≥ 4.
+- **🔄 CV** — coefficient of variation of disbursements over 2022–2024. Lower = more stable. Threshold: < 1.0. NaN = peripheral (not assessed).
+- **🎯 Sect%** — share of donor's country portfolio in this sector. Full bar = 100%. Threshold: ≥ 15%.
+- **💰 / 🔄 / 🎯** checkboxes — did the donor clear the threshold for Scale / Persistence / Embeddedness?
+- **Priority** — High (≥ 2 strong incl. scale or persistence) · Medium (1 strong) · Low (0 strong) · Peripheral (not assessed).
             """
         )
 
