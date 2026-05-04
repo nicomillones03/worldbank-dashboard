@@ -782,30 +782,46 @@ elif page == "🎯 Priority Framework":
         st.markdown(
             """
 Each donor × country × sector cell is assessed on three indicators:
-1. **Disbursement strength** — is the donor in the top tier of recent disbursement within this country-sector, and above the global median?
-2. **Persistence** — was the donor active in at least 4 of the last 5 years (2020–2024) with stable disbursements (low CV)?
-3. **Embeddedness** — does this country-sector represent ≥ 15% of the donor's country portfolio?
+1. **💰 Disbursement strength** — donor ranks in the top third within its country-sector AND above the global P50 across all assessed donors.
+2. **🔄 Persistence** — donor was active in at least 4 of the last 5 years (2020–2024) with stable disbursements (CV < 1.0).
+3. **🎯 Embeddedness** — this country-sector represents ≥ 15% of the donor's total country portfolio.
 
-The number of "strong" indicators (`n_strong`) determines priority:
+`n_strong` = count of True flags (0–3). Priority rule:
 - **High** → `n_strong` ≥ 2, including disbursement or persistence
 - **Medium** → `n_strong` = 1
 - **Low** → assessed but `n_strong` = 0
 - **Peripheral / not assessed** → no active year in the recent window
 
-See the **📚 Methodology** page for the precise thresholds.
+See the **📚 Methodology** page for precise thresholds.
             """
         )
 
     assessed = dcs[dcs["priority"] != "Peripheral / not assessed"]
 
+    # ── KPI row ───────────────────────────────────────────────────────────────
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Assessed partnerships", f"{len(assessed):,}",
-              help="Donor-country-sector cells that passed the Stage 2 assessment thresholds.")
+              help="Donor-country-sector cells that passed the Stage 2 minimum activity rule.")
     c2.metric("High priority", f"{(assessed['priority']=='High').sum():,}", help=HELP["priority"])
     c3.metric("Medium priority", f"{(assessed['priority']=='Medium').sum():,}", help=HELP["priority"])
     c4.metric("Low priority", f"{(assessed['priority']=='Low').sum():,}", help=HELP["priority"])
 
+    # ── Indicator flag rates ───────────────────────────────────────────────────
+    n = len(assessed)
+    d_pct = assessed["disbursement_strong"].sum() / n * 100
+    p_pct = assessed["persistence_strong"].sum()  / n * 100
+    e_pct = assessed["embeddedness_strong"].sum()  / n * 100
+    c5, c6, c7 = st.columns(3)
+    c5.metric("💰 Disbursement strong", f"{d_pct:.0f}% of assessed",
+              help="Donors ranking in the top third within their country-sector AND above global P50.")
+    c6.metric("🔄 Persistence strong", f"{p_pct:.0f}% of assessed",
+              help="Donors active in ≥ 4 of the last 5 years with CV < 1.0.")
+    c7.metric("🎯 Embeddedness strong", f"{e_pct:.0f}% of assessed",
+              help="Donors allocating ≥ 15% of their country portfolio to this sector.")
+
     st.divider()
+
+    # ── Priority by sector / country ──────────────────────────────────────────
     col_l, col_r = st.columns(2)
 
     with col_l:
@@ -847,41 +863,125 @@ See the **📚 Methodology** page for the precise thresholds.
 
     st.divider()
 
+    # ── What drives priority? ─────────────────────────────────────────────────
+    st.subheader("What drives each priority level?")
+    st.caption(
+        "Share of assessed partnerships that are strong on each indicator, "
+        "broken down by priority level."
+    )
+    flag_rates = (
+        assessed.groupby("priority")[
+            ["disbursement_strong", "persistence_strong", "embeddedness_strong"]
+        ]
+        .mean()
+        .mul(100)
+        .round(1)
+        .reset_index()
+    )
+    flag_long = flag_rates.melt(
+        id_vars="priority", var_name="Indicator", value_name="% strong"
+    )
+    flag_long["Indicator"] = flag_long["Indicator"].map({
+        "disbursement_strong": "💰 Disbursement",
+        "persistence_strong":  "🔄 Persistence",
+        "embeddedness_strong": "🎯 Embeddedness",
+    })
+    INDICATOR_COLOURS = {
+        "💰 Disbursement": "#2C73D2",
+        "🔄 Persistence":  "#0CA4A5",
+        "🎯 Embeddedness": "#F5A623",
+    }
+    fig_flags = px.bar(
+        flag_long,
+        x="priority", y="% strong", color="Indicator",
+        barmode="group",
+        color_discrete_map=INDICATOR_COLOURS,
+        category_orders={
+            "priority": [p for p in PRIORITY_ORDER if p != "Peripheral / not assessed"],
+            "Indicator": ["💰 Disbursement", "🔄 Persistence", "🎯 Embeddedness"],
+        },
+        labels={"priority": "Priority level", "% strong": "% of partnerships"},
+        text_auto=".0f",
+    )
+    fig_flags.update_layout(
+        height=380, legend_title="Indicator",
+        yaxis=dict(range=[0, 105], ticksuffix="%"),
+    )
+    st.plotly_chart(fig_flags, use_container_width=True)
+
+    st.divider()
+
+    # ── Top High-priority partnerships table ──────────────────────────────────
     st.subheader("Top High-priority partnerships by disbursement")
     top_n = st.slider("Show top N", 10, 50, 20)
     high = assessed[assessed["priority"] == "High"].sort_values("recent_avg", ascending=False)
     if len(high):
-        show = high.head(top_n)[
-            ["donor_name", "country_name", "sector", "recent_avg",
-             "active_share", "sector_share", "n_strong", "cs_context"]
-        ].copy()
-        show["recent_avg"]   = show["recent_avg"].apply(lambda v: f"${v:,.2f}M")
-        show["active_share"] = (show["active_share"]*100).round(0).astype(int).astype(str)+"%"
-        show["sector_share"] = (show["sector_share"]*100).round(1).astype(str)+"%"
-        show.columns = ["Donor","Country","Sector","Recent Avg","Active %","Sector %","Strong","Context"]
+        cols_needed = [
+            "donor_name", "country_name", "sector",
+            "recent_avg", "disburse_pctile_within_cs",
+            "persistence_active_years", "cv_recent", "sector_share",
+            "disbursement_strong", "persistence_strong", "embeddedness_strong",
+            "cs_context",
+        ]
+        show = high.head(top_n)[[c for c in cols_needed if c in high.columns]].copy()
+
+        show["recent_avg"] = show["recent_avg"].apply(lambda v: f"${v:,.1f}M")
+        show["disburse_pctile_within_cs"] = show["disburse_pctile_within_cs"].round(0).astype("Int64").astype(str) + "%"
+        if "persistence_active_years" in show.columns:
+            show["persistence_active_years"] = show["persistence_active_years"].astype(int).astype(str) + "/5 yrs"
+        if "cv_recent" in show.columns:
+            show["cv_recent"] = show["cv_recent"].round(2)
+        show["sector_share"] = (show["sector_share"] * 100).round(1).astype(str) + "%"
+        for flag in ["disbursement_strong", "persistence_strong", "embeddedness_strong"]:
+            if flag in show.columns:
+                show[flag] = show[flag].map({True: "✓", False: "✗"})
+
+        show.columns = [
+            "Donor", "Country", "Sector",
+            "Recent Avg", "CS Rank",
+            "5yr Active", "CV", "Sector %",
+            "💰 Disburse", "🔄 Persist", "🎯 Embed",
+            "Context",
+        ]
         st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500)
+        st.caption(
+            "CS Rank = percentile within country-sector (assessed donors only). "
+            "5yr Active = active years out of last 5. CV = coefficient of variation of recent disbursements."
+        )
 
     st.divider()
 
+    # ── Indicator scatter ─────────────────────────────────────────────────────
     st.subheader("Indicator scatter")
-    st.caption("Visualise how the three Stage 2 indicators relate across partnerships. Colour = priority.")
+    st.caption("Explore how any two indicators relate across assessed partnerships. Colour = priority level.")
     if len(assessed):
-        x_col = st.selectbox("X axis", ["recent_avg","active_share","sector_share"], index=0)
-        y_col = st.selectbox("Y axis", ["active_share","recent_avg","sector_share"], index=0)
+        axis_options = {
+            "Recent avg disbursement ($M)":       "recent_avg",
+            "CS rank — disbursement percentile":  "disburse_pctile_within_cs",
+            "5yr active years (out of 5)":        "persistence_active_years",
+            "CV of recent disbursements":         "cv_recent",
+            "Sector share (portfolio %)":         "sector_share",
+        }
+        # filter to options whose column exists
+        axis_options = {k: v for k, v in axis_options.items() if v in assessed.columns}
+        ax_labels = list(axis_options.keys())
+
+        col_x, col_y = st.columns(2)
+        x_label = col_x.selectbox("X axis", ax_labels, index=0)
+        y_label = col_y.selectbox("Y axis", ax_labels, index=2)
+        x_col = axis_options[x_label]
+        y_col = axis_options[y_label]
+
         fig_ind = px.scatter(
             assessed, x=x_col, y=y_col,
             color="priority", color_discrete_map=PRIORITY_COLOURS,
-            hover_data=["donor_name","country_name","sector"],
+            hover_data=["donor_name", "country_name", "sector"],
             opacity=0.6,
             render_mode="svg",
             category_orders={"priority": [p for p in PRIORITY_ORDER if p != "Peripheral / not assessed"]},
-            labels={
-                "recent_avg": "Recent avg disbursement ($M)",
-                "active_share": "Active years share",
-                "sector_share": "Sector share",
-            },
+            labels={x_col: x_label, y_col: y_label},
         )
-        fig_ind.update_layout(height=500)
+        fig_ind.update_layout(height=500, legend_title="Priority")
         st.plotly_chart(fig_ind, use_container_width=True)
 
 
