@@ -1095,46 +1095,100 @@ elif page == "👥 Donor Profiles":
 elif page == "📋 Priority Table":
     st.title("📋 Full Priority Table")
     st.caption(
-        "Complete donor–country–sector priority table. Use sidebar filters to narrow "
-        "results, then download."
+        "Complete donor–country–sector priority table with all indicators. "
+        "Use sidebar filters to narrow results, then download."
     )
+
+    # ── Sort controls ─────────────────────────────────────────────────────────
+    sort_options = {
+        "Recent avg disbursement":     "recent_avg",
+        "Disburse rank (within CS)":   "disburse_pctile_within_cs",
+        "5yr active years":            "persistence_active_years",
+        "CV of recent disbursements":  "cv_recent",
+        "Sector share":                "sector_share",
+        "N strong indicators":         "n_strong",
+        "Donor name":                  "donor_name",
+    }
+    # keep only columns that actually exist in dcs
+    sort_options = {k: v for k, v in sort_options.items() if v in dcs.columns}
 
     col_a, col_b = st.columns(2)
     with col_a:
-        sort_col = st.selectbox("Sort by",
-            ["recent_avg","n_strong","active_share","sector_share","donor_name"])
+        sort_label = st.selectbox("Sort by", list(sort_options.keys()))
     with col_b:
-        sort_asc = st.radio("Order", ["Descending","Ascending"], horizontal=True) == "Ascending"
+        sort_asc = st.radio("Order", ["Descending", "Ascending"], horizontal=True) == "Ascending"
 
+    sort_col = sort_options[sort_label]
     display = dcs.sort_values(sort_col, ascending=sort_asc).reset_index(drop=True)
 
-    show = display[[
-        "donor_name","donor_type","country_name","sector",
-        "recent_avg","active_years","active_share","sector_share",
-        "disbursement_strong","persistence_strong","embeddedness_strong",
-        "n_strong","priority","cs_context"
-    ]].copy()
-    show["recent_avg"]   = show["recent_avg"].apply(lambda v: f"${v:,.2f}M")
-    show["active_share"] = (show["active_share"]*100).round(0).astype(int).astype(str)+"%"
-    show["sector_share"] = (show["sector_share"]*100).round(1).astype(str)+"%"
-    show.columns = [
-        "Donor","Type","Country","Sector",
-        "Recent Avg","Active Yrs","Active %","Sector %",
-        "Disburse","Persist","Embed","Strong","Priority","Context",
-    ]
-    st.dataframe(show, use_container_width=True, height=650)
+    # ── Build display dataframe — keep numeric for column_config ──────────────
+    show = pd.DataFrame()
+    show["Donor"]    = display["donor_name"]
+    show["Type"]     = display["donor_type"]
+    show["Country"]  = display["country_name"]
+    show["Sector"]   = display["sector"]
+    show["recent_avg"] = display["recent_avg"].round(1)
+
+    if "disburse_pctile_within_cs" in display.columns:
+        show["disburse_pct"] = display["disburse_pctile_within_cs"].round(1)
+    if "persistence_active_years" in display.columns:
+        show["yrs_active"] = display["persistence_active_years"].astype("Int64")
+    if "cv_recent" in display.columns:
+        show["cv"] = display["cv_recent"].round(2)
+
+    show["sector_pct"] = (display["sector_share"] * 100).round(1)
+    show["💰 Scale"]   = display["disbursement_strong"].astype(bool)
+    show["🔄 Persist"] = display["persistence_strong"].astype(bool)
+    show["🎯 Embed"]   = display["embeddedness_strong"].astype(bool)
+    show["Priority"]   = display["priority"]
+    show["Context"]    = display["cs_context"]
+
+    # ── Column config ─────────────────────────────────────────────────────────
+    col_cfg = {
+        "recent_avg": st.column_config.NumberColumn(
+            "Recent Avg ($M)", format="$%.1f",
+            help="Mean annual disbursement over 2022–2024."),
+        "sector_pct": st.column_config.ProgressColumn(
+            "🎯 Sector %", min_value=0, max_value=100, format="%.1f%%",
+            help="Share of donor's total country portfolio in this sector. ≥ 15% = embeddedness strong."),
+        "💰 Scale":  st.column_config.CheckboxColumn(
+            "💰 Scale", help="Top third within country-sector AND above global P50"),
+        "🔄 Persist": st.column_config.CheckboxColumn(
+            "🔄 Persist", help="Active ≥ 4 of last 5 years AND CV < 1.0"),
+        "🎯 Embed":  st.column_config.CheckboxColumn(
+            "🎯 Embed", help="Sector ≥ 15% of donor's country portfolio"),
+    }
+    if "disburse_pct" in show.columns:
+        col_cfg["disburse_pct"] = st.column_config.ProgressColumn(
+            "💰 Disburse rank", min_value=0, max_value=100, format="%.0f%%",
+            help="Disbursement percentile within this country-sector (assessed donors). ≥ P67 needed.")
+    if "yrs_active" in show.columns:
+        col_cfg["yrs_active"] = st.column_config.ProgressColumn(
+            "🔄 5yr active", min_value=0, max_value=5, format="%d / 5",
+            help="Active years in 2020–2024. ≥ 4 needed for persistence.")
+    if "cv" in show.columns:
+        col_cfg["cv"] = st.column_config.NumberColumn(
+            "🔄 CV", format="%.2f",
+            help="CV of disbursements over 2022–2024. < 1.0 needed for persistence. NaN = peripheral.")
+
+    st.dataframe(
+        show.reset_index(drop=True),
+        column_config=col_cfg,
+        use_container_width=True,
+        height=650,
+    )
 
     with st.expander("ℹ️ Column definitions"):
         st.markdown(
-            f"""
-- **Recent Avg** — {HELP['recent_avg']}
-- **Active Yrs** — number of years the donor disbursed anything in this country-sector.
-- **Active %** — {HELP['active_share']}
-- **Sector %** — {HELP['sector_share']}
-- **Disburse / Persist / Embed** — boolean flags (True/False) for each of the three Stage 2 indicators.
-- **Strong** — {HELP['n_strong']}
-- **Priority** — {HELP['priority']}
-- **Context** — {HELP['cs_context']}
+            """
+- **Recent Avg ($M)** — mean annual disbursement over the last 3 years (2022–2024).
+- **💰 Disburse rank** — disbursement percentile within the same country-sector, among assessed donors only. Progress bar = relative position (P100 = top donor). Threshold: ≥ P67.
+- **🔄 5yr active** — number of years with positive disbursement in 2020–2024. Progress bar out of 5. Threshold: ≥ 4.
+- **🔄 CV** — coefficient of variation of annual disbursements over 2022–2024. Lower = more stable. Threshold: < 1.0. NaN = peripheral (not assessed).
+- **🎯 Sector %** — share of donor's total country portfolio allocated to this sector. Progress bar out of 100%. Threshold: ≥ 15%.
+- **💰 Scale / 🔄 Persist / 🎯 Embed** — checkbox: did the donor clear the threshold on that indicator?
+- **Priority** — High (≥ 2 strong, incl. scale or persistence) · Medium (1 strong) · Low (0 strong) · Peripheral (not assessed).
+- **Context** — Stage 1 country-sector classification.
             """
         )
 
