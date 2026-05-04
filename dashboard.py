@@ -803,8 +803,6 @@ See the **📚 Methodology** page for the full definitions and thresholds.
     )
 
     # ── Bubble chart: donor count × funding concentration ────────────────────
-    med_donors = int(hhi_df["cs_donor_count"].median())
-
     fig_hhi = px.scatter(
         hhi_df,
         x="cs_donor_count",
@@ -825,46 +823,16 @@ See the **📚 Methodology** page for the full definitions and thresholds.
         category_orders={"cs_context": CONTEXT_ORDER},
         labels={
             "cs_donor_count": "Number of active donors",
-            "HHI": "Funding concentration  ↑ more concentrated",
+            "HHI": "Funding concentration (0 = evenly shared, 1 = one donor holds all)",
             "cs_recent_avg": "Total ODA ($M)",
             "cs_context": "Context",
         },
-    )
-
-    # Reference lines with plain-language labels
-    fig_hhi.add_hline(
-        y=0.25, line_dash="dot", line_color="#999",
-        annotation_text="Below this line: funding spread across several donors",
-        annotation_position="bottom right",
-        annotation_font_size=10, annotation_font_color="#666",
-    )
-    fig_hhi.add_vline(
-        x=med_donors, line_dash="dot", line_color="#999",
-        annotation_text=f"Median: {med_donors} active donors",
-        annotation_position="top left",
-        annotation_font_size=10, annotation_font_color="#666",
-    )
-
-    # Quadrant label for the problem zone
-    x_max = int(hhi_df["cs_donor_count"].max())
-    fig_hhi.add_annotation(
-        x=x_max * 0.85, y=0.95,
-        text="⚠ Many donors,<br>money still concentrated",
-        showarrow=False,
-        font=dict(size=11, color="#FF6F61"),
-        bgcolor="rgba(255,255,255,0.7)",
-        bordercolor="#FF6F61", borderwidth=1,
     )
 
     fig_hhi.update_layout(
         height=520,
         legend_title="Context",
         legend=dict(orientation="h", y=-0.15),
-        xaxis=dict(title="Number of active donors"),
-        yaxis=dict(
-            title="Funding concentration  (1 = one donor holds everything,  0 = evenly shared)",
-            range=[0, 1.05],
-        ),
         margin=dict(t=10, b=10),
     )
     st.plotly_chart(fig_hhi, use_container_width=True)
