@@ -767,6 +767,187 @@ See the **📚 Methodology** page for the full definitions and thresholds.
     fig_sc.update_layout(height=500, legend_title="Context")
     st.plotly_chart(fig_sc, use_container_width=True)
 
+    st.divider()
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # FRAGMENTATION ANALYSIS
+    # ═══════════════════════════════════════════════════════════════════════════
+    st.subheader("🔀 How fragmented is the ODA space?")
+    st.caption(
+        "Two complementary views: how ODA is distributed across partnerships (financial concentration), "
+        "and how many donors crowd each country-sector space (coordination load)."
+    )
+
+    # ── Pre-compute: donor shares and HHI ────────────────────────────────────
+    dcs_assessed = dcs_raw[dcs_raw["priority"] != "Peripheral / not assessed"].copy()
+    cs_totals = (
+        dcs_assessed.groupby(["country_code", "sector"])["recent_avg"]
+        .sum().rename("cs_total")
+    )
+    dcs_assessed = dcs_assessed.join(cs_totals, on=["country_code", "sector"])
+    dcs_assessed["donor_share"] = (
+        dcs_assessed["recent_avg"] / dcs_assessed["cs_total"]
+    )
+
+    hhi_df = (
+        dcs_assessed.groupby(["country_name", "sector"])["donor_share"]
+        .apply(lambda s: (s ** 2).sum())
+        .reset_index(name="HHI")
+    )
+    hhi_df = hhi_df.merge(
+        cs[["country_name", "sector", "cs_context",
+            "cs_donor_count", "cs_recent_avg"]],
+        on=["country_name", "sector"], how="left",
+    )
+
+    col_l, col_r = st.columns(2)
+
+    # ── Chart 1: Concentration curve ─────────────────────────────────────────
+    with col_l:
+        st.markdown("**ODA concentration curve**")
+        st.caption(
+            "Cumulative share of ODA (y) vs. cumulative share of donor–country–sector "
+            "partnerships (x), sorted from largest to smallest contributor. "
+            "A curve close to the top-left signals extreme concentration."
+        )
+
+        sorted_donors = (
+            dcs_assessed.sort_values("recent_avg", ascending=False)
+            .reset_index(drop=True)
+        )
+        total_oda = sorted_donors["recent_avg"].sum()
+        n_total   = len(sorted_donors)
+        sorted_donors["cum_donor_pct"] = (sorted_donors.index + 1) / n_total * 100
+        sorted_donors["cum_oda_pct"]   = (
+            sorted_donors["recent_avg"].cumsum() / total_oda * 100
+        )
+
+        fig_lorenz = go.Figure()
+
+        # Equality reference line
+        fig_lorenz.add_trace(go.Scatter(
+            x=[0, 100], y=[0, 100],
+            mode="lines",
+            line=dict(color="#AAAAAA", dash="dash", width=1),
+            name="Equal distribution",
+            hoverinfo="skip",
+        ))
+
+        # Actual concentration curve
+        fig_lorenz.add_trace(go.Scatter(
+            x=sorted_donors["cum_donor_pct"],
+            y=sorted_donors["cum_oda_pct"],
+            mode="lines",
+            line=dict(color="#2C73D2", width=2.5),
+            name="Actual distribution",
+            hovertemplate=(
+                "Top %{x:.1f}% of partnerships<br>"
+                "→ %{y:.1f}% of ODA<extra></extra>"
+            ),
+        ))
+
+        # Annotations at key milestones
+        for xpct, label_offset_x in [(5, 8), (10, 13), (20, 23)]:
+            ypct = sorted_donors[
+                sorted_donors["cum_donor_pct"] <= xpct
+            ]["cum_oda_pct"].max()
+            fig_lorenz.add_annotation(
+                x=xpct, y=ypct,
+                text=f"Top {xpct}%<br>→ {ypct:.0f}% of ODA",
+                showarrow=True, arrowhead=2, arrowcolor="#555",
+                ax=40, ay=-25,
+                font=dict(size=11),
+                bgcolor="white", bordercolor="#ccc", borderwidth=1,
+            )
+
+        fig_lorenz.update_layout(
+            height=420,
+            xaxis=dict(title="Cumulative % of donor–CS partnerships",
+                       ticksuffix="%", range=[0, 100]),
+            yaxis=dict(title="Cumulative % of ODA",
+                       ticksuffix="%", range=[0, 100]),
+            legend=dict(orientation="h", y=-0.18),
+            margin=dict(t=20),
+        )
+        st.plotly_chart(fig_lorenz, use_container_width=True)
+
+    # ── Chart 2: HHI × donor count bubble ────────────────────────────────────
+    with col_r:
+        st.markdown("**Coordination load vs. financial concentration**")
+        st.caption(
+            "Each bubble = one country-sector space. "
+            "X = number of active donors (coordination load). "
+            "Y = Herfindahl-Hirschman Index (HHI); lower = more spread across donors. "
+            "Size = total ODA. Colour = context classification."
+        )
+
+        fig_hhi = px.scatter(
+            hhi_df,
+            x="cs_donor_count",
+            y="HHI",
+            size="cs_recent_avg",
+            color="cs_context",
+            color_discrete_map=CONTEXT_COLOURS,
+            hover_data={"country_name": True, "sector": True,
+                        "cs_donor_count": True, "HHI": ":.3f",
+                        "cs_recent_avg": ":.1f"},
+            size_max=40,
+            render_mode="svg",
+            category_orders={"cs_context": CONTEXT_ORDER},
+            labels={
+                "cs_donor_count": "Active donors",
+                "HHI": "HHI (1 = monopoly, 0 = perfectly spread)",
+                "cs_recent_avg": "Total ODA ($M)",
+                "cs_context": "Context",
+            },
+        )
+
+        # Quadrant lines at median donor count and HHI = 0.25 (standard threshold)
+        med_donors = int(hhi_df["cs_donor_count"].median())
+        fig_hhi.add_hline(
+            y=0.25, line_dash="dot", line_color="#888",
+            annotation_text="HHI = 0.25 (competitive threshold)",
+            annotation_position="top right",
+            annotation_font_size=10,
+        )
+        fig_hhi.add_vline(
+            x=med_donors, line_dash="dot", line_color="#888",
+            annotation_text=f"Median donors ({med_donors})",
+            annotation_position="top right",
+            annotation_font_size=10,
+        )
+
+        fig_hhi.update_layout(
+            height=420,
+            legend_title="Context",
+            margin=dict(t=20),
+        )
+        st.plotly_chart(fig_hhi, use_container_width=True)
+
+    # ── Key insight callout ───────────────────────────────────────────────────
+    top5_oda = (
+        sorted_donors[sorted_donors["cum_donor_pct"] <= 5]["cum_oda_pct"].max()
+    )
+    frag_spaces   = hhi_df[hhi_df["cs_context"] == "Fragmented coordination space"]
+    med_donors_frag = int(frag_spaces["cs_donor_count"].median())
+    med_hhi_frag    = frag_spaces["HHI"].median()
+    top3_frag = (
+        dcs_assessed[dcs_assessed["cs_context"] == "Fragmented coordination space"]
+        .groupby(["country_name", "sector"])["donor_share"]
+        .apply(lambda s: s.nlargest(3).sum() * 100)
+        .median()
+    )
+
+    st.info(
+        f"**The ODA paradox:** The top 5% of donor–country–sector partnerships account for "
+        f"**{top5_oda:.0f}%** of all disbursements — extreme financial concentration. "
+        f"Yet in spaces classified as *Fragmented coordination*, the median number of active "
+        f"donors is **{med_donors_frag}**, each managing their own reporting cycles, priorities, "
+        f"and in-country teams. Despite this, the top 3 donors in those same spaces still "
+        f"hold a median **{top3_frag:.0f}%** of the money — many actors creating coordination "
+        f"overhead while resources remain concentrated at the top."
+    )
+
 
 # ═════════════════════════════════════════════════════════════════════════════
 # PAGE 4 — Priority Framework (unchanged, with tooltips added)
