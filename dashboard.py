@@ -936,13 +936,21 @@ See the **📚 Methodology** page for precise thresholds.
             if flag in show.columns:
                 show[flag] = show[flag].map({True: "✓", False: "✗"})
 
-        show.columns = [
-            "Donor", "Country", "Sector",
-            "Recent Avg", "CS Rank",
-            "5yr Active", "CV", "Sector %",
-            "💰 Disburse", "🔄 Persist", "🎯 Embed",
-            "Context",
-        ]
+        col_rename = {
+            "donor_name": "Donor",
+            "country_name": "Country",
+            "sector": "Sector",
+            "recent_avg": "Recent Avg",
+            "disburse_pctile_within_cs": "CS Rank",
+            "persistence_active_years": "5yr Active",
+            "cv_recent": "CV",
+            "sector_share": "Sector %",
+            "disbursement_strong": "💰 Disburse",
+            "persistence_strong": "🔄 Persist",
+            "embeddedness_strong": "🎯 Embed",
+            "cs_context": "Context",
+        }
+        show = show.rename(columns=col_rename)
         st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500)
         st.caption(
             "CS Rank = percentile within country-sector (assessed donors only). "
