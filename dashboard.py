@@ -916,45 +916,41 @@ See the **📚 Methodology** page for precise thresholds.
     top_n = st.slider("Show top N", 10, 50, 20)
     high = assessed[assessed["priority"] == "High"].sort_values("recent_avg", ascending=False)
     if len(high):
-        cols_needed = [
-            "donor_name", "country_name", "sector",
-            "recent_avg", "disburse_pctile_within_cs",
-            "persistence_active_years", "cv_recent", "sector_share",
-            "disbursement_strong", "persistence_strong", "embeddedness_strong",
-            "cs_context",
-        ]
-        show = high.head(top_n)[[c for c in cols_needed if c in high.columns]].copy()
+        raw = high.head(top_n).copy()
 
-        show["recent_avg"] = show["recent_avg"].apply(lambda v: f"${v:,.1f}M")
-        show["disburse_pctile_within_cs"] = show["disburse_pctile_within_cs"].round(0).astype("Int64").astype(str) + "%"
-        if "persistence_active_years" in show.columns:
-            show["persistence_active_years"] = show["persistence_active_years"].astype(int).astype(str) + "/5 yrs"
-        if "cv_recent" in show.columns:
-            show["cv_recent"] = show["cv_recent"].round(2)
-        show["sector_share"] = (show["sector_share"] * 100).round(1).astype(str) + "%"
-        for flag in ["disbursement_strong", "persistence_strong", "embeddedness_strong"]:
-            if flag in show.columns:
-                show[flag] = show[flag].map({True: "✓", False: "✗"})
+        # ── Build "Strong on" summary column from flag values ─────────────────
+        def strong_summary(row):
+            parts = []
+            if row.get("disbursement_strong", False): parts.append("💰 Scale")
+            if row.get("persistence_strong",  False): parts.append("🔄 Persist")
+            if row.get("embeddedness_strong",  False): parts.append("🎯 Embed")
+            return "  ".join(parts) if parts else "—"
+        raw["Strong on"] = raw.apply(strong_summary, axis=1)
 
-        col_rename = {
-            "donor_name": "Donor",
-            "country_name": "Country",
-            "sector": "Sector",
-            "recent_avg": "Recent Avg",
-            "disburse_pctile_within_cs": "CS Rank",
-            "persistence_active_years": "5yr Active",
-            "cv_recent": "CV",
-            "sector_share": "Sector %",
-            "disbursement_strong": "💰 Disburse",
-            "persistence_strong": "🔄 Persist",
-            "embeddedness_strong": "🎯 Embed",
-            "cs_context": "Context",
-        }
-        show = show.rename(columns=col_rename)
+        # ── Select and format display columns ─────────────────────────────────
+        show = pd.DataFrame()
+        show["Donor"]         = raw["donor_name"]
+        show["Country"]       = raw["country_name"]
+        show["Sector"]        = raw["sector"]
+        show["Recent Avg"]    = raw["recent_avg"].apply(lambda v: f"${v:,.1f}M")
+        show["Disburse rank"] = raw["disburse_pctile_within_cs"].round(0).astype(int).astype(str) + "%"
+
+        if "persistence_active_years" in raw.columns:
+            show["5yr active"] = raw["persistence_active_years"].astype(int).astype(str) + " / 5"
+        if "cv_recent" in raw.columns:
+            show["CV (recent)"] = raw["cv_recent"].round(2)
+
+        show["Sector %"]  = (raw["sector_share"] * 100).round(1).astype(str) + "%"
+        show["Strong on"] = raw["Strong on"]
+        show["Context"]   = raw["cs_context"]
+
         st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500)
         st.caption(
-            "CS Rank = percentile within country-sector (assessed donors only). "
-            "5yr Active = active years out of last 5. CV = coefficient of variation of recent disbursements."
+            "**Disburse rank** = disbursement percentile within the same country-sector (among assessed donors). "
+            "**5yr active** = active years in the last 5 (2020–2024); needs ≥ 4 for persistence. "
+            "**CV (recent)** = coefficient of variation of annual disbursements over the last 3 years; needs < 1.0 for persistence. "
+            "**Sector %** = share of donor's country portfolio in this sector (needs ≥ 15% for embeddedness). "
+            "**Strong on** = which of the three indicators this donor meets the threshold for."
         )
 
     st.divider()
