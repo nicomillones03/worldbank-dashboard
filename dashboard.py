@@ -590,12 +590,13 @@ elif page == "📊 Descriptive Analysis":
             df["cagr"] = ((df["e"] / df["s"]) ** (1 / n) - 1) * 100
             return df["cagr"].reset_index()
 
-        st.subheader("Sector CAGR — full period (2002–2024)", help=HELP["cagr"])
+        st.subheader("Sector CAGR — full period (2006–2024)", help=HELP["cagr"])
         st.caption(
-            "3-year averages at each endpoint: 2002–2004 → 2022–2024 · n = 20 years. "
+            "3-year averages at each endpoint: 2006–2008 → 2022–2024 · n = 16 years. "
+            "Start year 2006 is the first year with full bilateral DAC coverage. "
             "Blue = positive growth, red = contraction."
         )
-        full = sector_cagr([2002, 2003, 2004], [2022, 2023, 2024])
+        full = sector_cagr([2006, 2007, 2008], [2022, 2023, 2024])
         full = full.sort_values("cagr", ascending=False)
 
         fig_full = go.Figure(go.Bar(
@@ -615,21 +616,21 @@ elif page == "📊 Descriptive Analysis":
 
         st.divider()
 
-        st.subheader("Sector CAGR — sub-periods (2002–2013 vs 2013–2024)")
+        st.subheader("Sector CAGR — sub-periods (2006–2015 vs 2015–2024)")
         st.caption(
-            "3-year averages at each endpoint. "
-            "2002–2013: 2002–2004 → 2011–2013, n = 11 years. "
-            "2013–2024: 2011–2013 → 2022–2024, n = 11 years."
+            "3-year averages at each endpoint · n = 8 years each. "
+            "2006–2015: 2006–2008 → 2014–2016 (pre-SDG). "
+            "2015–2024: 2014–2016 → 2022–2024 (SDG era)."
         )
-        c1 = sector_cagr([2002, 2003, 2004], [2011, 2012, 2013], n=11).rename(columns={"cagr": "2002–2013"})
-        c2 = sector_cagr([2011, 2012, 2013], [2022, 2023, 2024], n=11).rename(columns={"cagr": "2013–2024"})
-        sub = c1.merge(c2, on="sector", how="outer").sort_values("2013–2024", ascending=False)
+        c1 = sector_cagr([2006, 2007, 2008], [2014, 2015, 2016]).rename(columns={"cagr": "2006–2015"})
+        c2 = sector_cagr([2014, 2015, 2016], [2022, 2023, 2024]).rename(columns={"cagr": "2015–2024"})
+        sub = c1.merge(c2, on="sector", how="outer").sort_values("2015–2024", ascending=False)
 
         sub_long = sub.melt(id_vars="sector", var_name="Period", value_name="cagr")
         fig_sub = px.bar(
             sub_long, y="sector", x="cagr",
             color="Period", barmode="group", orientation="h",
-            color_discrete_map={"2002–2013": "#0CA4A5", "2013–2024": "#2C73D2"},
+            color_discrete_map={"2006–2015": "#0CA4A5", "2015–2024": "#2C73D2"},
             text=sub_long["cagr"].round(1).astype(str) + "%",
             labels={"cagr": "CAGR (%)", "sector": ""},
         )
@@ -1487,10 +1488,12 @@ Where we report sector growth, we use **Compound Annual Growth Rate** between
 
 $$\\text{CAGR} = \\left(\\frac{\\overline{Y_{end}}}{\\overline{Y_{start}}}\\right)^{1/n} - 1$$
 
-where $n$ = years between the midpoints of the two windows. For the
-sub-period charts (2002–2013 and 2013–2024), $n$ is fixed at **11** for
-both periods — the span of each labelled period — so the two CAGRs are
-directly comparable.
+where $n$ = years between the midpoints of the two windows.
+
+**Coverage note:** Bilateral DAC donors only entered the sector dataset
+from 2006 onwards (prior years contain MDB and Vertical Fund data only).
+All CAGR charts therefore use **2006–2008 as the start window** to ensure
+a consistent donor universe across both endpoints.
 
 ---
 
