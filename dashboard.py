@@ -578,12 +578,13 @@ elif page == "📊 Descriptive Analysis":
         st.divider()
 
         # ── CAGR helper ───────────────────────────────────────────────────────
-        def sector_cagr(start_yrs, end_yrs):
+        def sector_cagr(start_yrs, end_yrs, n=None):
             s = (by_sector_year[by_sector_year["year"].isin(start_yrs)]
                  .groupby("sector")["total_oda"].mean())
             e = (by_sector_year[by_sector_year["year"].isin(end_yrs)]
                  .groupby("sector")["total_oda"].mean())
-            n = (sum(end_yrs) / len(end_yrs)) - (sum(start_yrs) / len(start_yrs))
+            if n is None:
+                n = (sum(end_yrs) / len(end_yrs)) - (sum(start_yrs) / len(start_yrs))
             df = pd.concat([s.rename("s"), e.rename("e")], axis=1).dropna()
             df = df[(df["s"] > 0) & (df["e"] > 0)]
             df["cagr"] = ((df["e"] / df["s"]) ** (1 / n) - 1) * 100
@@ -617,11 +618,11 @@ elif page == "📊 Descriptive Analysis":
         st.subheader("Sector CAGR — sub-periods (2002–2013 vs 2013–2024)")
         st.caption(
             "3-year averages at each endpoint. "
-            "2002–2013: 2002–2004 → 2011–2013, n ≈ 9 years. "
-            "2013–2024: 2011–2013 → 2022–2024, n ≈ 11 years."
+            "2002–2013: 2002–2004 → 2011–2013, n = 11 years. "
+            "2013–2024: 2011–2013 → 2022–2024, n = 11 years."
         )
-        c1 = sector_cagr([2002, 2003, 2004], [2011, 2012, 2013]).rename(columns={"cagr": "2002–2013"})
-        c2 = sector_cagr([2011, 2012, 2013], [2022, 2023, 2024]).rename(columns={"cagr": "2013–2024"})
+        c1 = sector_cagr([2002, 2003, 2004], [2011, 2012, 2013], n=11).rename(columns={"cagr": "2002–2013"})
+        c2 = sector_cagr([2011, 2012, 2013], [2022, 2023, 2024], n=11).rename(columns={"cagr": "2013–2024"})
         sub = c1.merge(c2, on="sector", how="outer").sort_values("2013–2024", ascending=False)
 
         sub_long = sub.melt(id_vars="sector", var_name="Period", value_name="cagr")
@@ -1486,7 +1487,10 @@ Where we report sector growth, we use **Compound Annual Growth Rate** between
 
 $$\\text{CAGR} = \\left(\\frac{\\overline{Y_{end}}}{\\overline{Y_{start}}}\\right)^{1/n} - 1$$
 
-where $n$ = years between the midpoints of the two windows.
+where $n$ = years between the midpoints of the two windows. For the
+sub-period charts (2002–2013 and 2013–2024), $n$ is fixed at **11** for
+both periods — the span of each labelled period — so the two CAGRs are
+directly comparable.
 
 ---
 
