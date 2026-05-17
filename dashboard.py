@@ -89,10 +89,12 @@ HELP = {
 def load_data():
     cs  = pd.read_csv(DATA_DIR / "country_sector_context_table.csv")
     dcs = pd.read_csv(DATA_DIR / "donor_country_sector_priority_table.csv")
-    by_year       = pd.read_csv(DATA_DIR / "agg_by_year.csv")
-    by_dtype_year = pd.read_csv(DATA_DIR / "agg_by_donor_type_year.csv")
-    by_sector_year = pd.read_csv(DATA_DIR / "agg_by_sector_year.csv")
-    by_country_year = pd.read_csv(DATA_DIR / "agg_by_country_year.csv")
+    # Volumes-based (DAC2A): complete bilateral coverage from 2002
+    by_year         = pd.read_csv(DATA_DIR / "agg_by_year_vol.csv")
+    by_dtype_year   = pd.read_csv(DATA_DIR / "agg_by_donor_type_year_vol.csv")
+    by_country_year = pd.read_csv(DATA_DIR / "agg_by_country_year_vol.csv")
+    # Sector panel (CRS): kept for sector-level charts only
+    by_sector_year  = pd.read_csv(DATA_DIR / "agg_by_sector_year.csv")
 
     dcs["priority"]   = pd.Categorical(dcs["priority"],   categories=PRIORITY_ORDER, ordered=True)
     dcs["cs_context"] = pd.Categorical(dcs["cs_context"], categories=CONTEXT_ORDER,  ordered=True)
